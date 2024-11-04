@@ -13,6 +13,7 @@ import {LoaderComponent} from './loader/loader.component';
 import { CustomersComponent } from './components/customers/customers.component';
 import { TicketsComponent } from './components/tickets/tickets.component';
 import { CustomerSmallComponent } from './components/customer-small/customer-small.component';
+import {NgxSonnerToaster} from "ngx-sonner";
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { CustomerSmallComponent } from './components/customer-small/customer-sma
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    NgxSonnerToaster,
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),

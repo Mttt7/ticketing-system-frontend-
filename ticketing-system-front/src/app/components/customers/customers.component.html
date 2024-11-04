@@ -1,6 +1,5 @@
+<ngx-sonner-toaster richColors position="top-right" />
 <div class="flex flex-col items-center justify-center mt-20 bg-white shadow-lg rounded-lg pb-2">
-
-
   <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="p-4    ">
     <div class="flex items-center justify-center gap-4 py-3">
       <div class="">
@@ -51,7 +50,7 @@
         <td>{{ customer.phone }}</td>
         <td>{{ customer.firstName }}</td>
         <td>{{ customer.lastName }}</td>
-        <td class="text-xl cursor-pointer">🔍</td>
+        <td class="text-xl cursor-pointer" onclick="my_modal_1.showModal()" (click)="openCustomerModal(customer)">🔍</td>
         <td class="text-xl cursor-pointer">🎫</td> <!-- See User's Tickets -->
       </tr>
 
@@ -64,3 +63,51 @@
     <button class="join-item btn" *ngIf="!last" (click)="nextPage()">»</button>
   </div>
 </div>
+
+
+
+
+<dialog id="my_modal_1" class="modal">
+  <div class="modal-box">
+    <div class="py-4 w-full">
+      <form [formGroup]="editCustomerForm" (ngSubmit)="onSearch()" class="p-4 w-full">
+        <div class="flex flex-col items-center justify-center gap-1 py-3">
+          <div class="">
+            <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+            <input  formControlName="phone" type="text" value="{{currentCustomer?.phone}}"
+                   class="input input-bordered w-full mt-1">
+          </div>
+
+          <div class="">
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input  formControlName="email" type="text" value="{{currentCustomer?.email}}"
+                   class="input input-bordered w-full mt-1">
+          </div>
+
+          <div class="">
+            <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
+            <input  formControlName="firstName" type="text" value="{{currentCustomer?.firstName}}"
+                   class="input input-bordered w-full mt-1">
+          </div>
+
+          <div class="">
+            <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+            <input formControlName="lastName" type="text" value="{{currentCustomer?.lastName}}"
+                   class="input input-bordered w-full mt-1">
+          </div>
+
+        </div>
+
+
+
+      </form>
+    </div>
+    <div class="modal-action">
+      <button type="submit" class="mr-1 btn btn-primary text-white" (click)="editCustomer()" >Edit</button>
+      <form method="dialog">
+
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
