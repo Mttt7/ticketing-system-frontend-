@@ -5,12 +5,12 @@
     class="flex items-center justify-start w-full h-12 p-3 fixed top-0 bg-white z-50"
   >
     <div>
-      <a routerLink="/home" class="text-xl font-bold text-black"
-        >Real Estate App</a
+      <a routerLink="/dashboard" class="text-xl font-bold text-black"
+        >TSystem</a
       >
-      <a routerLink="/home" class="ml-4 text-blue-500">Home</a>
-      <a routerLink="/favorites" class="ml-4 text-green-300">Favorites</a>
-      <a routerLink="/add" class="ml-4 text-red-300">Add</a>
+      <a routerLink="/dashboard" class="ml-4 text-green-400 font-semibold">Dashboard</a>
+      <a routerLink="/customers" class="ml-4 text-red-400 font-semibold">Customers</a>
+      <a routerLink="/tickets" class="ml-4 text-blue-500 font-semibold">Tickets</a>
     </div>
 
     <div class="ml-auto mr-6" *ngIf="!userIsLoggedIn()">

@@ -1,0 +1,66 @@
+<div class="flex flex-col items-center justify-center mt-20 bg-white shadow-lg rounded-lg pb-2">
+
+
+  <form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="p-4    ">
+    <div class="flex items-center justify-center gap-4 py-3">
+      <div class="">
+        <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+        <input id="phone" formControlName="phone" type="text"
+               class="input input-bordered w-full mt-1">
+      </div>
+
+      <div class="">
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input id="email" formControlName="email" type="text"
+               class="input input-bordered w-full mt-1">
+      </div>
+
+      <div class="">
+        <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
+        <input id="firstName" formControlName="firstName" type="text"
+               class="input input-bordered w-full mt-1">
+      </div>
+
+      <div class="">
+        <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+        <input id="lastName" formControlName="lastName" type="text"
+               class="input input-bordered w-full mt-1">
+      </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-primary text-white">Search</button>
+  </form>
+
+  <div class="overflow-x-auto w-full px-2">
+    <table class="table table-md px-2">
+      <thead>
+      <tr>
+        <th>id</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let customer of customers">
+        <th>{{ customer.id }}</th>
+        <td>{{ customer.email }}</td>
+        <td>{{ customer.phone }}</td>
+        <td>{{ customer.firstName }}</td>
+        <td>{{ customer.lastName }}</td>
+        <td class="text-xl cursor-pointer">🔍</td>
+        <td class="text-xl cursor-pointer">🎫</td> <!-- See User's Tickets -->
+      </tr>
+
+
+    </table>
+  </div>
+  <div class="join mt-10" *ngIf="customers.length>0">
+    <button class="join-item btn" (click)="previousPage()" *ngIf="this.pageNumber > 0">«</button>
+    <button class="join-item btn">Page {{ pageNumber + 1 }}/{{allPages}}</button>
+    <button class="join-item btn" *ngIf="!last" (click)="nextPage()">»</button>
+  </div>
+</div>
