@@ -51,7 +51,7 @@
         <td>{{ customer.firstName }}</td>
         <td>{{ customer.lastName }}</td>
         <td class="text-xl cursor-pointer" onclick="my_modal_1.showModal()" (click)="openCustomerModal(customer)">🔍</td>
-        <td class="text-xl cursor-pointer">🎫</td> <!-- See User's Tickets -->
+        <td class="text-xl cursor-pointer" onclick="my_modal_2.showModal()" (click)="openCustomerTicketsModal(customer)">🎫</td>
       </tr>
 
 
@@ -106,6 +106,48 @@
       <button type="submit" class="mr-1 btn btn-primary text-white" (click)="editCustomer()" >Edit</button>
       <form method="dialog">
 
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+
+
+
+<dialog id="my_modal_2" class="modal">
+  <div class="modal-box max-w-screen-2xl">
+    <div class="py-4 w-full">
+      <table class="table table-md px-2">
+        <thead>
+        <tr>
+          <th>id</th>
+          <th>Customer</th>
+          <th>Channel</th>
+          <th>Category</th>
+          <th>Subcategory</th>
+          <th>Opened by</th>
+          <th>Opened date</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let ticket of tickets">
+          <th>{{ ticket.id }}</th>
+          <td>{{ ticket.customer.firstName }}  {{ticket.customer.lastName}}</td>
+          <td>{{ticket.channel }}</td>
+          <td>{{ ticket.category.name }}</td>
+          <td>{{ ticket.subcategory.name}}</td>
+          <td>{{ ticket.openedBy.firstName + " "+ ticket.openedBy.lastName }}</td>
+          <td>{{ ticket.createdAt | date:'short' }}</td>
+          <td class="text-xl cursor-pointer">🔍</td>
+        </tr>
+
+
+      </table>
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
         <button class="btn">Close</button>
       </form>
     </div>

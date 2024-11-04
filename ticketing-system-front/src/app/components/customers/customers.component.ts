@@ -5,6 +5,7 @@ import {SearchCriteria} from "../../models/SearchCriteria";
 import {Customer} from "../../models/Customer";
 import {toast} from 'ngx-sonner';
 import {HttpErrorResponse} from "@angular/common/http";
+import {Ticket} from "../../models/Ticket";
 
 @Component({
   selector: 'app-customers',
@@ -20,6 +21,7 @@ export class CustomersComponent {
   allPages: number = 0;
   last: boolean = false;
   currentCustomer!: Customer;
+  tickets: Ticket[] = [];
 
   constructor(private fb: FormBuilder, private customersService: CustomersService) {
     this.searchForm = this.fb.group({
@@ -92,5 +94,14 @@ export class CustomersComponent {
     } else {
       toast.error('Please fill all required fields correctly!');
     }
+  }
+
+  openCustomerTicketsModal(customer: Customer) {
+    // TODO pagination
+    this.currentCustomer = customer;
+    this.customersService.getCustomerTickets(customer.id, this.pageNumber, 10)
+      .subscribe((response: any) => {
+        this.tickets = response.content
+      });
   }
 }
