@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { UserProfile } from '../models/UserProfile';
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {UserProfile} from '../models/UserProfile';
 
 @Injectable({
   providedIn: 'root',
@@ -9,5 +9,10 @@ import { UserProfile } from '../models/UserProfile';
 export class UserService {
   userUrl = 'http://localhost:8080/api/v1/user';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
+
+  getAllUsers(): Observable<UserProfile[]> {
+    return this.http.get<UserProfile[]>(this.userUrl + '/all');
+  }
 }

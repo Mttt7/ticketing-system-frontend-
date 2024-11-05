@@ -21,6 +21,7 @@
     "@angular/platform-browser": "^18.0.0",
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
+    "@preline/combobox": "^2.5.0",
     "daisyui": "^4.12.10",
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.5",

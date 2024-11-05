@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
-import { Observable, from, lastValueFrom } from 'rxjs';
-import { HttpEvent, HttpHandler, HttpRequest } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {from, lastValueFrom, Observable} from 'rxjs';
+import {HttpEvent, HttpHandler, HttpRequest} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthInterceptorService {
-  constructor() {}
+  constructor() {
+  }
 
   intercept(
     request: HttpRequest<any>,
@@ -19,7 +20,6 @@ export class AuthInterceptorService {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Promise<HttpEvent<any>> {
-    //const securedEndpoints = ['http://localhost:5000/api/v1/posts', 'http://localhost:5000/api/v1/user'];
     const securedEndpoints = ['http://localhost:8080/api/v1'];
 
     if (

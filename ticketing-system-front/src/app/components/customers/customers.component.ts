@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CustomersService} from "../../services/customers.service";
-import {SearchCriteria} from "../../models/SearchCriteria";
+import {SearchCustomerCriteria} from "../../models/SearchCustomerCriteria";
 import {Customer} from "../../models/Customer";
 import {toast} from 'ngx-sonner';
 import {HttpErrorResponse} from "@angular/common/http";
@@ -47,7 +47,7 @@ export class CustomersComponent {
   }
 
   onSearch() {
-    const searchCriteria: SearchCriteria = this.searchForm.value;
+    const searchCriteria: SearchCustomerCriteria = this.searchForm.value;
     this.customersService.searchCustomers(searchCriteria, this.pageNumber).subscribe(response => {
       this.pageNumber = response.number;
       this.last = response.last;
@@ -57,6 +57,7 @@ export class CustomersComponent {
   }
 
   nextPage() {
+    if (this.last) return;
     this.pageNumber++;
     this.onSearch();
   }
