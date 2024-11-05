@@ -94,16 +94,12 @@ export class TicketsComponent {
     const selectedCategoryId = this.searchTicketForm.get('categoryId')?.value;
     const selectedCategory = this.categories.find(category => category.id === +selectedCategoryId);
     this.subcategories = selectedCategory?.subcategories || [];
-    console.log(this.categories)
-    console.log(selectedCategory)
-    console.log(this.subcategories);
     this.searchTicketForm.get('subcategoryId')?.setValue('');
   }
 
   loadCategories() {
     this.categoryService.getCategories().subscribe(categories => {
       this.categories = categories;
-      console.log(categories);
       this.subcategories = [];
     });
   }

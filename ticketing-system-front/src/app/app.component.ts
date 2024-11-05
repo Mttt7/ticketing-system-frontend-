@@ -14,7 +14,6 @@ export class AppComponent {
   ngOnInit(): void {
     if (this.userIsLoggedIn()) {
       this.id = this.authService.getLoggedInUserId()!;
-      console.log(this.id);
     } else {
       this.id = '';
     }
