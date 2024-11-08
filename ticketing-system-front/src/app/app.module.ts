@@ -10,10 +10,11 @@ import {AuthInterceptorService} from './services/auth-interceptor.service';
 import {HomeComponent} from './components/home/home.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LoaderComponent} from './loader/loader.component';
-import { CustomersComponent } from './components/customers/customers.component';
-import { TicketsComponent } from './components/tickets/tickets.component';
-import { CustomerSmallComponent } from './components/customer-small/customer-small.component';
+import {CustomersComponent} from './components/customers/customers.component';
+import {TicketsComponent} from './components/tickets/tickets.component';
+import {CustomerSmallComponent} from './components/customer-small/customer-small.component';
 import {NgxSonnerToaster} from "ngx-sonner";
+import {CustomersSelectComponent} from './components/customers-select/customers-select.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {NgxSonnerToaster} from "ngx-sonner";
     HomeComponent,
     CustomersComponent,
     TicketsComponent,
-    CustomerSmallComponent
+    CustomerSmallComponent,
+    CustomersSelectComponent
   ],
   imports: [
     BrowserModule,

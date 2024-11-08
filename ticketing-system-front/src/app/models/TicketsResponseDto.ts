@@ -1,6 +1,6 @@
 import {Ticket} from "./Ticket";
 
-export interface TicketResponseDto {
+export interface TicketsResponseDto {
   content: Ticket[]
   empty: boolean;
   first: boolean;

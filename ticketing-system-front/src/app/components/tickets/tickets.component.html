@@ -1,4 +1,5 @@
 <div class="flex flex-col items-center justify-center mt-20 bg-white shadow-lg rounded-lg pb-2">
+  <button class="btn btn-primary text-white mt-4" onclick="modal_1.showModal()">Create Ticket</button>
   <form [formGroup]="searchTicketForm" (ngSubmit)="searchTickets()" class="p-4">
     <div class="flex items-center justify-center gap-4 py-3 flex-wrap">
       <div class="flex flex-col">
@@ -145,3 +146,83 @@
     <button class="join-item btn" (click)="nextPage()" *ngIf="!last">»</button>
   </div>
 </div>
+
+<dialog id="modal_1" class="modal" #modal_1>
+  <div class="modal-box max-w-screen-xl p-5">
+    <div class="py-4 w-full">
+      <form [formGroup]="createTicketForm" (ngSubmit)="createTicket()" class="p-4">
+
+        <div class="flex items-center justify-start gap-3 mb-4 w-full">
+          <div class="flex items-center justify-center gap-3">
+            <div class="flex items-center justify-center gap-1 mr-1">
+              <div class="font-medium text-gray-700">Customer:</div>
+              <img *ngIf="selectedCustomer" src="user.png" class="w-7 h-7">
+            </div>
+            <div *ngIf="selectedCustomer"
+                 class="flex items-center justify-center gap-1">{{ selectedCustomer.firstName }} {{ selectedCustomer.lastName }}
+            </div>
+            <button class="btn btn-primary btn-sm text-white " onclick="modal_2.showModal()">Select Customer</button>
+          </div>
+          <div class="flex items-center justify-start gap-2 flex-wrap w-full px-4">
+            <div class="flex flex-col items-center justify-center mb-2">
+              <label for="channel" class="block text-sm font-medium text-gray-700">Channel:</label>
+              <select formControlName="channel" required class="input input-bordered mt-1 w-[200px]">
+                <option *ngFor="let channel of channels" [value]="channel">{{ channel }}</option>
+              </select>
+            </div>
+            <div class="flex flex-col items-center justify-center mb-2">
+              <label for="priority" class="block text-sm font-medium text-gray-700">Priority:</label>
+              <select formControlName="priority" required class="input input-bordered mt-1 w-[200px]">
+                <option *ngFor="let priority of priorities" [value]="priority">{{ priority }}</option>
+              </select>
+            </div>
+
+            <div class="flex flex-col items-center justify-center mb-2">
+              <label for="categoryId" class="block text-sm font-medium text-gray-700">Category</label>
+              <select formControlName="categoryId" class="input input-bordered  mt-1 w-[200px]"
+                      (change)="categoryCreateChanged()">
+                <option value="" selected></option>
+                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+              </select>
+            </div>
+
+
+            <div class="flex flex-col items-center justify-start mb-2">
+              <label for="subcategoryId" class="block text-sm font-medium text-gray-700">Subcategory</label>
+              <select formControlName="subcategoryId" required class="input input-bordered mt-1 w-[200px]">
+                <option *ngFor="let subcategory of subcategoriesCreate" [value]="subcategory.id">{{ subcategory.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col mb-4">
+          <label for="content" class="block text-sm font-medium text-gray-700">Content:</label>
+          <textarea formControlName="content" required class="input input-bordered mt-1 h-44 p-1"></textarea>
+        </div>
+        <button type="submit" [disabled]="createTicketForm.invalid" class="btn btn-primary text-white mt-4">Create
+          Ticket
+        </button>
+      </form>
+    </div>
+    <div class="modal-action">
+
+      <form method="dialog">
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="modal_2" class="modal" #modal_2>
+  <div class="modal-box max-w-screen-2xl bg-white">
+    <div class="py-4 w-full">
+      <app-customers-select (selectedCustomer)="setCustomer($event)"></app-customers-select>
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>

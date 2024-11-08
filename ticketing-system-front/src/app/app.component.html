@@ -1,3 +1,4 @@
+<ngx-sonner-toaster richColors position="top-right"/>
 <div
   class="flex flex-col items-center justify-center overflow-x-hidden overflow-y-hidden"
 >
@@ -6,7 +7,7 @@
   >
     <div>
       <a routerLink="/dashboard" class="text-xl font-bold text-black"
-        >TSystem</a
+      >TSystem</a
       >
       <a routerLink="/dashboard" class="ml-4 text-green-400 font-semibold">Dashboard</a>
       <a routerLink="/customers" class="ml-4 text-red-400 font-semibold">Customers</a>
@@ -20,7 +21,7 @@
     <div class="ml-auto" *ngIf="userIsLoggedIn()">
       <a routerLink="messages/" class="ml-4 text-blue-500">📭 Messages</a>
       <a routerLink="messages/" class="ml-4 text-blue-500" *ngIf="false"
-        >📬 Messages</a
+      >📬 Messages</a
       >
     </div>
     <div class="mr-6" *ngIf="userIsLoggedIn()">
