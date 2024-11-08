@@ -49,10 +49,16 @@
         <td>{{ customer.phone }}</td>
         <td>{{ customer.firstName }}</td>
         <td>{{ customer.lastName }}</td>
-        <td class="text-xl cursor-pointer" onclick="my_modal_1.showModal()" (click)="openCustomerModal(customer)">🔍</td>
-        <td class="text-xl cursor-pointer" onclick="my_modal_2.showModal()"
-            (click)="openCustomerTicketsModal(customer)">🎫
+        <td class="flex items-center justify-center gap-2">
+          <button class="flex items-center justify-center">
+            <button onclick="my_modal_1.showModal()" (click)="openCustomerModal(customer)" class="btn btn-sm ">🔍
+            </button>
+          </button>
+          <button class="flex items-center justify-center" onclick="my_modal_2.showModal()">
+            <button (click)="openCustomerTicketsModal(customer)" class="btn btn-sm">🎫</button>
+          </button>
         </td>
+
       </tr>
 
     </table>
@@ -134,7 +140,9 @@
           <td>{{ ticket.subcategory.name }}</td>
           <td>{{ ticket.openedBy.firstName + " " + ticket.openedBy.lastName }}</td>
           <td>{{ ticket.createdAt | date:'short' }}</td>
-          <td class="text-xl cursor-pointer">🔍</td>
+          <td class="flex items-center justify-center">
+            <button class="btn btn-sm ">🔍</button>
+          </td>
         </tr>
 
       </table>

@@ -132,8 +132,9 @@
         <td>{{ ticket.closedBy?.firstName }} {{ ticket.closedBy?.lastName }}</td>
         <td>{{ ticket.createdAt | date:'short' }}</td>
         <td>{{ ticket.closedAt | date:'short' }}</td>
-        <td>
-          <button class="btn btn-sm btn-outline" (click)="openTicketDetails(ticket)">🔍</button>
+        <td class="flex items-center justify-center gap-3">
+          <button class="btn btn-sm" [routerLink]="['/tickets', ticket.id]">🔍</button>
+          <button class="btn btn-sm" (click)="openTicketDetails(ticket)">🧭</button>
         </td>
       </tr>
       </tbody>

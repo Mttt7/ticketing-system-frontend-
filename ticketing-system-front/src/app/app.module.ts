@@ -12,9 +12,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LoaderComponent} from './loader/loader.component';
 import {CustomersComponent} from './components/customers/customers.component';
 import {TicketsComponent} from './components/tickets/tickets.component';
-import {CustomerSmallComponent} from './components/customer-small/customer-small.component';
 import {NgxSonnerToaster} from "ngx-sonner";
 import {CustomersSelectComponent} from './components/customers-select/customers-select.component';
+import { TicketDetailsComponent } from './components/ticket-details/ticket-details.component';
 
 
 @NgModule({
@@ -26,8 +26,8 @@ import {CustomersSelectComponent} from './components/customers-select/customers-
     HomeComponent,
     CustomersComponent,
     TicketsComponent,
-    CustomerSmallComponent,
-    CustomersSelectComponent
+    CustomersSelectComponent,
+    TicketDetailsComponent
   ],
   imports: [
     BrowserModule,

@@ -2,13 +2,14 @@ import {Customer} from "./Customer";
 import {UserProfile} from "./UserProfile";
 import {Subcategory} from "./Subcategory";
 import {Category} from "./Category";
+import {Channel} from "./Channel";
 
 export interface Ticket{
   id: number;
-  customer:Customer;
+  customer: Customer;
   content: string;
   isOpen: boolean;
-  channel: string;
+  channel: Channel;
   category: Category;
   subcategory: Subcategory;
   priority: string;
@@ -16,5 +17,5 @@ export interface Ticket{
   closedBy?: UserProfile;
   createdAt: Date;
   updatedAt: Date;
-  closedAt?: Date;
+  closedAt: Date;
 }

@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Channel} from "../models/Channel";
-import {Priority} from "../models/Priority";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +16,7 @@ export class EnumService {
     return this.http.get<Channel[]>(`${this.baseUrl}/channels`);
   }
 
-  getPriorities(): Observable<Priority[]> {
-    return this.http.get<Priority[]>(`${this.baseUrl}/priorities`);
+  getPriorities(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/priorities`);
   }
 }

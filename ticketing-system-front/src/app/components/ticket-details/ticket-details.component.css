@@ -1,0 +1,15 @@
+.priority-low {
+  color: lightblue;
+}
+
+.priority-medium {
+  color: orange;
+}
+
+.priority-high {
+  color: lightcoral;
+}
+
+.priority-critical {
+  color: darkred;
+}

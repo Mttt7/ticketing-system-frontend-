@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {TicketService} from "../../services/ticket.service";
 import {Ticket} from "../../models/Ticket";
 import {EnumService} from "../../services/enum.service";
-import {Priority} from "../../models/Priority";
 import {Channel} from "../../models/Channel";
 import {UserService} from "../../services/user.service";
 import {Category} from "../../models/Category";
@@ -23,7 +22,7 @@ export class TicketsComponent {
   createTicketForm: FormGroup;
   tickets: Ticket[] = [];
   channels: Channel[] = [];
-  priorities: Priority[] = [];
+  priorities: string[] = [];
   categories: Category[] = [];
   subcategories: Subcategory[] = [];
   subcategoriesCreate: Subcategory[] = [];
@@ -168,7 +167,8 @@ export class TicketsComponent {
   }
 
   openTicketDetails(ticket: any) {
-    throw new Error('Method not implemented.');
+    const url = `/tickets/${ticket.id}`;
+    window.open(url, '_blank');
   }
 
   nextPage() {
