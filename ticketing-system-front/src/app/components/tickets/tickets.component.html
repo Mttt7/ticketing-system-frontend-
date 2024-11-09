@@ -1,153 +1,159 @@
-<div class="flex flex-col items-center justify-center mt-20 bg-white shadow-lg rounded-lg pb-2">
-  <button class="btn btn-primary text-white mt-4" onclick="modal_1.showModal()">Create Ticket</button>
-  <form [formGroup]="searchTicketForm" (ngSubmit)="searchTickets()" class="p-4">
-    <div class="flex items-center justify-center gap-4 py-3 flex-wrap">
-      <div class="flex flex-col">
-        <label for="ticketId" class="block text-sm font-medium text-gray-700">Ticket ID</label>
-        <input id="ticketId" formControlName="ticketId" type="number" class="input input-bordered w-full mt-1">
-      </div>
-      <div class="flex flex-col">
-        <label for="customerId" class="block text-sm font-medium text-gray-700">Customer ID</label>
-        <input id="customerId" formControlName="customerId" type="number" class="input input-bordered w-full mt-1">
-      </div>
-      <div class="flex flex-col">
-        <label for="customerEmail" class="block text-sm font-medium text-gray-700">Customer Email</label>
-        <input id="customerEmail" formControlName="customerEmail" type="email" class="input input-bordered w-full mt-1">
-      </div>
 
-      <div class="flex flex-col">
-        <label for="customerPhone" class="block text-sm font-medium text-gray-700">Customer Phone</label>
-        <input id="customerPhone" formControlName="customerPhone" type="text" class="input input-bordered w-full mt-1">
-      </div>
-
-      <div class="flex flex-col">
-        <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
-        <input id="content" formControlName="content" type="text" class="input input-bordered w-full mt-1">
-      </div>
+<div class="flex items-center justify-center w-screen">
 
 
-      <div>
-        <label for="channel">Channel</label>
-        <select id="channel" formControlName="channel" class="input input-bordered w-full mt-1">
-          <option *ngFor="let channel of channels" [value]="channel">{{ channel }}</option>
-        </select>
+  <div class="flex flex-col items-center justify-center mt-20 bg-white shadow-lg rounded-lg
+pb-2 w-[95%]">
+    <button class="btn btn-primary text-white mt-4" onclick="modal_1.showModal()">Create Ticket</button>
+    <form [formGroup]="searchTicketForm" (ngSubmit)="searchTickets()" class=" p-4">
+      <div class="flex flex-wrap items-center justify-center gap-4 py-3">
+        <div class="flex flex-col">
+          <label for="ticketId" class="block text-sm font-medium text-gray-700">Ticket ID</label>
+          <input id="ticketId" formControlName="ticketId" type="number" class="input input-bordered w-full mt-1">
+        </div>
+        <div class="flex flex-col">
+          <label for="customerId" class="block text-sm font-medium text-gray-700">Customer ID</label>
+          <input id="customerId" formControlName="customerId" type="number" class="input input-bordered w-full mt-1">
+        </div>
+        <div class="flex flex-col">
+          <label for="customerEmail" class="block text-sm font-medium text-gray-700">Customer Email</label>
+          <input id="customerEmail" formControlName="customerEmail" type="email" class="input input-bordered w-full mt-1">
+        </div>
+
+        <div class="flex flex-col">
+          <label for="customerPhone" class="block text-sm font-medium text-gray-700">Customer Phone</label>
+          <input id="customerPhone" formControlName="customerPhone" type="text" class="input input-bordered w-full mt-1">
+        </div>
+
+        <div class="flex flex-col">
+          <label for="content" class="block text-sm font-medium text-gray-700">Content</label>
+          <input id="content" formControlName="content" type="text" class="input input-bordered w-full mt-1">
+        </div>
+
+        <div class="flex flex-col">
+          <label for="channel">Channel</label>
+          <select id="channel" formControlName="channel" class="input input-bordered w-full mt-1">
+            <option *ngFor="let channel of channels" [value]="channel">{{ channel }}</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col">
+          <label for="categoryId" class="block text-sm font-medium text-gray-700">Category</label>
+          <select id="categoryId" formControlName="categoryId" class="input input-bordered w-full mt-1"
+                  (change)="categoryChanged()">
+            <option value="" selected></option>
+            <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+          </select>
+        </div>
+
+        <div class="flex flex-col">
+          <label for="subcategoryId" class="block text-sm font-medium text-gray-700">Subcategory</label>
+          <select id="subcategoryId" formControlName="subcategoryId" class="input input-bordered w-full mt-1">
+            <option value="" selected></option>
+            <option *ngFor="let subcategory of subcategories" [value]="subcategory.id">{{ subcategory.name }}</option>
+          </select>
+        </div>
+
+
+        <div>
+          <label for="priority">Priority</label>
+          <select id="priority" formControlName="priority" class="input input-bordered w-full mt-1">
+            <option *ngFor="let priority of priorities" [value]="priority">{{ priority }}</option>
+          </select>
+        </div>
+        <div class="flex flex-col">
+          <label for="openedById" class="block text-sm font-medium text-gray-700">Opened By</label>
+          <select id="openedById" formControlName="openedById" class="input input-bordered w-full mt-1">
+            <option value="" selected></option> <!-- Puste pole -->
+            <option *ngFor="let user of users"
+                    [value]="user.id">{{ user.firstName }} {{ user.lastName }} {{ user.email }}
+            </option>
+          </select>
+        </div>
+
+        <div class="flex flex-col">
+          <label for="closedById" class="block text-sm font-medium text-gray-700">Closed By</label>
+          <select id="closedById" formControlName="closedById" class="input input-bordered w-full mt-1">
+            <option value="" selected></option> <!-- Puste pole -->
+            <option *ngFor="let user of users"
+                    [value]="user.id">{{ user.firstName }} {{ user.lastName }} {{ user.email }}
+            </option>
+          </select>
+        </div>
+
+        <div>
+          <label for="createdAfter" class="block text-sm font-medium text-gray-700">Created After</label>
+          <input id="createdAfter" formControlName="createdAfter" type="date"
+                 class="input input-bordered w-full mt-1">
+        </div>
+
+        <div>
+          <label for="createdBefore" class="block text-sm font-medium text-gray-700">Created Before</label>
+          <input id="createdBefore" formControlName="createdBefore" type="date"
+                 class="input input-bordered w-full mt-1">
+        </div>
+
+        <div class="flex flex-col">
+          <label for="isOpen" class="block text-sm font-medium text-gray-700">Is Open</label>
+          <input id="isOpen" formControlName="isOpen" type="checkbox" class="checkbox checkbox-primary mt-1">
+        </div>
       </div>
 
-      <div class="flex flex-col">
-        <label for="categoryId" class="block text-sm font-medium text-gray-700">Category</label>
-        <select id="categoryId" formControlName="categoryId" class="input input-bordered w-full mt-1"
-                (change)="categoryChanged()">
-          <option value="" selected></option>
-          <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
-        </select>
-      </div>
+      <button type="submit" class="btn btn-primary text-white mt-4">Search</button>
+      <button type="button" class="btn btn-warning mt-4 ml-2" (click)="clearForm()">Clear</button>
+    </form>
 
-      <div class="flex flex-col">
-        <label for="subcategoryId" class="block text-sm font-medium text-gray-700">Subcategory</label>
-        <select id="subcategoryId" formControlName="subcategoryId" class="input input-bordered w-full mt-1">
-          <option value="" selected></option>
-          <option *ngFor="let subcategory of subcategories" [value]="subcategory.id">{{ subcategory.name }}</option>
-        </select>
-      </div>
-
-
-      <div>
-        <label for="priority">Priority</label>
-        <select id="priority" formControlName="priority" class="input input-bordered w-full mt-1">
-          <option *ngFor="let priority of priorities" [value]="priority">{{ priority }}</option>
-        </select>
-      </div>
-      <div class="flex flex-col">
-        <label for="openedById" class="block text-sm font-medium text-gray-700">Opened By</label>
-        <select id="openedById" formControlName="openedById" class="input input-bordered w-full mt-1">
-          <option value="" selected></option> <!-- Puste pole -->
-          <option *ngFor="let user of users"
-                  [value]="user.id">{{ user.firstName }} {{ user.lastName }} {{ user.email }}
-          </option>
-        </select>
-      </div>
-
-      <div class="flex flex-col">
-        <label for="closedById" class="block text-sm font-medium text-gray-700">Closed By</label>
-        <select id="closedById" formControlName="closedById" class="input input-bordered w-full mt-1">
-          <option value="" selected></option> <!-- Puste pole -->
-          <option *ngFor="let user of users"
-                  [value]="user.id">{{ user.firstName }} {{ user.lastName }} {{ user.email }}
-          </option>
-        </select>
-      </div>
-
-      <div>
-        <label for="createdAfter" class="block text-sm font-medium text-gray-700">Created After</label>
-        <input id="createdAfter" formControlName="createdAfter" type="date"
-               class="input input-bordered w-full mt-1">
-      </div>
-
-      <div>
-        <label for="createdBefore" class="block text-sm font-medium text-gray-700">Created Before</label>
-        <input id="createdBefore" formControlName="createdBefore" type="date"
-               class="input input-bordered w-full mt-1">
-      </div>
-
-      <div class="flex flex-col">
-        <label for="isOpen" class="block text-sm font-medium text-gray-700">Is Open</label>
-        <input id="isOpen" formControlName="isOpen" type="checkbox" class="checkbox checkbox-primary mt-1">
-      </div>
+    <div class="overflow-x-auto w-[99%] px-2">
+      <table class="table table-xs px-2">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>Customer</th>
+          <th>Content</th>
+          <th>Channel</th>
+          <th>Category</th>
+          <th>Subcategory</th>
+          <th>Priority</th>
+          <th>Is Open</th>
+          <th>Opened By</th>
+          <th>Closed By</th>
+          <th>Created At</th>
+          <th>Closed At</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let ticket of tickets">
+          <td>{{ ticket.id }}</td>
+          <td>{{ ticket.customer.firstName }} {{ ticket.customer.lastName }}</td>
+          <td>{{ ticket.content }}</td>
+          <td>{{ ticket.channel }}</td>
+          <td>{{ ticket.category?.name }}</td>
+          <td>{{ ticket.subcategory?.name }}</td>
+          <td>{{ ticket.priority }}</td>
+          <td>{{ ticket.isOpen ? '✅' : '❌' }}</td>
+          <td>{{ ticket.openedBy?.firstName }} {{ ticket.openedBy?.lastName }}</td>
+          <td>{{ ticket.closedBy?.firstName }} {{ ticket.closedBy?.lastName }}</td>
+          <td>{{ ticket.createdAt | date:'short' }}</td>
+          <td>{{ ticket.closedAt | date:'short' }}</td>
+          <td class="flex items-center justify-center gap-3">
+            <button class="btn btn-sm" [routerLink]="['/tickets', ticket.id]">🔍</button>
+            <button class="btn btn-sm" (click)="openTicketDetails(ticket)">🧭</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
     </div>
 
-    <button type="submit" class="btn btn-primary text-white mt-4">Search</button>
-    <button type="button" class="btn btn-warning mt-4 ml-2" (click)="clearForm()">Clear</button>
-  </form>
-
-  <div class="overflow-x-auto w-full px-2">
-    <table class="table table-md px-2">
-      <thead>
-      <tr>
-        <th>ID</th>
-        <th>Customer</th>
-        <th>Content</th>
-        <th>Channel</th>
-        <th>Category</th>
-        <th>Subcategory</th>
-        <th>Priority</th>
-        <th>Is Open</th>
-        <th>Opened By</th>
-        <th>Closed By</th>
-        <th>Created At</th>
-        <th>Closed At</th>
-        <th>Action</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr *ngFor="let ticket of tickets">
-        <td>{{ ticket.id }}</td>
-        <td>{{ ticket.customer.firstName }} {{ ticket.customer.lastName }}</td>
-        <td>{{ ticket.content }}</td>
-        <td>{{ ticket.channel }}</td>
-        <td>{{ ticket.category?.name }}</td>
-        <td>{{ ticket.subcategory?.name }}</td>
-        <td>{{ ticket.priority }}</td>
-        <td>{{ ticket.isOpen ? 'Yes' : 'No' }}</td>
-        <td>{{ ticket.openedBy?.firstName }} {{ ticket.openedBy?.lastName }}</td>
-        <td>{{ ticket.closedBy?.firstName }} {{ ticket.closedBy?.lastName }}</td>
-        <td>{{ ticket.createdAt | date:'short' }}</td>
-        <td>{{ ticket.closedAt | date:'short' }}</td>
-        <td class="flex items-center justify-center gap-3">
-          <button class="btn btn-sm" [routerLink]="['/tickets', ticket.id]">🔍</button>
-          <button class="btn btn-sm" (click)="openTicketDetails(ticket)">🧭</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <div class="join mt-10" *ngIf="tickets.length>0">
+      <button class="join-item btn" (click)="previousPage()" *ngIf="pageNumber > 0">«</button>
+      <button class="join-item btn">Page {{ pageNumber + 1 }}/{{ allPages }}</button>
+      <button class="join-item btn" (click)="nextPage()" *ngIf="!last">»</button>
+    </div>
   </div>
 
-  <div class="join mt-10" *ngIf="tickets.length>0">
-    <button class="join-item btn" (click)="previousPage()" *ngIf="pageNumber > 0">«</button>
-    <button class="join-item btn">Page {{ pageNumber + 1 }}/{{ allPages }}</button>
-    <button class="join-item btn" (click)="nextPage()" *ngIf="!last">»</button>
-  </div>
+
 </div>
-
 <dialog id="modal_1" class="modal" #modal_1>
   <div class="modal-box max-w-screen-xl p-5">
     <div class="py-4 w-full">
