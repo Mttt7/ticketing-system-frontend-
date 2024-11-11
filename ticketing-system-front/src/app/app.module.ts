@@ -15,6 +15,7 @@ import {TicketsComponent} from './components/tickets/tickets.component';
 import {NgxSonnerToaster} from "ngx-sonner";
 import {CustomersSelectComponent} from './components/customers-select/customers-select.component';
 import { TicketDetailsComponent } from './components/ticket-details/ticket-details.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { TicketDetailsComponent } from './components/ticket-details/ticket-detai
     CustomersComponent,
     TicketsComponent,
     CustomersSelectComponent,
-    TicketDetailsComponent
+    TicketDetailsComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

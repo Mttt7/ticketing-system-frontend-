@@ -38,8 +38,8 @@ export class TicketService {
     return this.http.get<Ticket>(this.ticketUrl + '/' + ticketId);
   }
 
-  getFollowedTickets(): Observable<TicketsResponseDto> {
-    return this.http.get<TicketsResponseDto>(this.ticketUrl + '/followed');
+  getFollowedTickets(pageNumber: number, pageSize: number, sort: string): Observable<TicketsResponseDto> {
+    return this.http.get<TicketsResponseDto>(this.ticketUrl + `/followed?pageNumber=${pageNumber}&pageSize=${pageSize}&sort=${sort}`);
   }
 
   getIsTicketFollowed(ticketId: number): Observable<{ isFollowed: boolean }> {

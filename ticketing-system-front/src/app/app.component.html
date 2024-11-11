@@ -10,6 +10,7 @@
       >TSystem</a
       >
       <a routerLink="/dashboard" class="ml-4 text-green-400 font-semibold">Dashboard</a>
+      <a routerLink="/tickets" class="ml-4 text-green-400 font-semibold">My Departments</a>
       <a routerLink="/customers" class="ml-4 text-red-400 font-semibold">Customers</a>
       <a routerLink="/tickets" class="ml-4 text-blue-500 font-semibold">Tickets</a>
     </div>
@@ -19,13 +20,7 @@
       <a routerLink="/register" class="ml-4 text-blue-500">Register</a>
     </div>
     <div class="ml-auto" *ngIf="userIsLoggedIn()">
-      <a routerLink="messages/" class="ml-4 text-blue-500">📭 Messages</a>
-      <a routerLink="messages/" class="ml-4 text-blue-500" *ngIf="false"
-      >📬 Messages</a
-      >
-    </div>
-    <div class="mr-6" *ngIf="userIsLoggedIn()">
-      <a [routerLink]="'users/' + id" class="ml-4 text-blue-500">Profile</a>
+      <a routerLink="/tickets" class="mr-4 text-blue-500 font-semibold">Admin Panel</a>
     </div>
   </div>
 

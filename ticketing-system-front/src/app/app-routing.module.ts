@@ -6,13 +6,14 @@ import {HomeComponent} from './components/home/home.component';
 import {CustomersComponent} from "./components/customers/customers.component";
 import {TicketsComponent} from "./components/tickets/tickets.component";
 import {TicketDetailsComponent} from "./components/ticket-details/ticket-details.component";
+import {DashboardComponent} from "./components/dashboard/dashboard.component";
 
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'dashboard', component: HomeComponent},
+  {path: 'dashboard', component: DashboardComponent},
   {path: 'customers', component: CustomersComponent},
   {path: 'tickets', component: TicketsComponent},
   {path: 'tickets/:id', component: TicketDetailsComponent}
