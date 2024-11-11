@@ -44,12 +44,37 @@
     <div class="flex flex-col gap-2 w-full">
       <button class="btn btn-primary text-white" onclick="new_comment_modal.showModal()">New comment</button>
       <div class="flex gap-1 w-full items-center justify-center">
-        <button class="btn btn-primary text-white w-[49%]">Follow</button>
-        <button class="btn btn-primary text-white w-[49%]">Assign</button>
+        <button class="btn btn-primary text-white w-[49%]" *ngIf="!ticket.isFollowed" (click)="follow()">Follow</button>
+        <button class="btn btn-primary text-white w-[49%]" *ngIf="ticket.isFollowed" (click)="unfollow()">Unfollow
+        </button>
+        <button class="btn btn-primary text-white w-[49%]" onclick="assign_to_modal.showModal()" (click)="getUsers()">
+          Assign
+        </button>
       </div>
       <button class="btn btn-primary text-white">Email client</button>
       <button class="btn btn-warning text-white">Change Category</button>
       <button class="btn btn-error text-white">Close</button>
+
+      <div class="overflow-x-auto">
+        <div class="text-center font-semibold italic mb-2">Followers:</div>
+        <table class="table table-xs table-pin-rows table-pin-cols">
+          <thead>
+          <tr>
+            <th>id</th>
+            <td>Full Name</td>
+            <td>email</td>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let follower of followers">
+            <th>{{ follower.id }}</th>
+            <td>{{ follower.firstName }} {{ follower.lastName }}</td>
+            <td>{{ follower.email }}</td>
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
   </div>
@@ -81,6 +106,22 @@
     </div>
     <div class="modal-action">
       <button class="btn btn-primary text-white" (click)="addComment()">Add</button>
+      <form method="dialog">
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="assign_to_modal" class="modal" #assign_to_modal>
+  <div class="modal-box max-w-screen-md bg-white">
+    <div class="py-4 w-full">
+      <select class="select select-bordered select-lg w-full" [(ngModel)]="newFollowerId">
+        <option *ngFor="let user of displayedUsers" [value]="user.id">{{ user.firstName }} {{ user.lastName }}</option>
+      </select>
+    </div>
+    <div class="modal-action">
+      <button class="btn btn-primary text-white" (click)="followForOtherUser()">Add</button>
       <form method="dialog">
         <button class="btn">Close</button>
       </form>

@@ -4,6 +4,7 @@ import {SearchTicketCriteria} from "../models/SearchTicketCriteria";
 import {TicketsResponseDto} from "../models/TicketsResponseDto";
 import {Observable} from "rxjs";
 import {Ticket} from "../models/Ticket";
+import {UserProfile} from "../models/UserProfile";
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,31 @@ export class TicketService {
     return this.http.post(this.ticketUrl + '/', ticketData);
   }
 
-  getTicketById(ticketId: number):Observable<Ticket> {
+  getTicketById(ticketId: number): Observable<Ticket> {
     return this.http.get<Ticket>(this.ticketUrl + '/' + ticketId);
+  }
+
+  getFollowedTickets(): Observable<TicketsResponseDto> {
+    return this.http.get<TicketsResponseDto>(this.ticketUrl + '/followed');
+  }
+
+  getIsTicketFollowed(ticketId: number): Observable<{ isFollowed: boolean }> {
+    return this.http.get<{ isFollowed: boolean }>(this.ticketUrl + '/is-followed/' + ticketId);
+  }
+
+  followTicket(ticketId: number): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(this.ticketUrl + '/follow/' + ticketId, null);
+  }
+
+  unfollowTicket(ticketId: number): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(this.ticketUrl + '/unfollow/' + ticketId, null);
+  }
+
+  followForOtherUser(ticketId: number, userId: number): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(this.ticketUrl + '/follow/' + ticketId + '/' + userId, null);
+  }
+
+  getFollowers(ticketId: number): Observable<UserProfile[]> {
+    return this.http.get<UserProfile[]>(this.ticketUrl + "/" + ticketId + '/followers');
   }
 }

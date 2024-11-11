@@ -4,7 +4,7 @@ import {Subcategory} from "./Subcategory";
 import {Category} from "./Category";
 import {Channel} from "./Channel";
 
-export interface Ticket{
+export interface Ticket {
   id: number;
   customer: Customer;
   content: string;
@@ -13,6 +13,7 @@ export interface Ticket{
   category: Category;
   subcategory: Subcategory;
   priority: string;
+  isFollowed: boolean;
   openedBy: UserProfile;
   closedBy?: UserProfile;
   createdAt: Date;

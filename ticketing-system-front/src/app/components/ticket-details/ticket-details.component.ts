@@ -5,6 +5,8 @@ import {Ticket} from "../../models/Ticket";
 import {toast} from "ngx-sonner";
 import {CommentService} from "../../services/comment.service";
 import {Comment} from "../../models/Comment";
+import {UserProfile} from "../../models/UserProfile";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-ticket-details',
@@ -20,10 +22,16 @@ export class TicketDetailsComponent {
   allPages: number = 0;
   last: boolean = false;
   comments: Comment[] = [];
+  newFollowerId: number = -1;
+  users: UserProfile[] = [];
+  followers: UserProfile[] = [];
+  displayedUsers: UserProfile[] = [];
 
   @ViewChild('new_comment_modal') newCommentModal!: ElementRef;
+  @ViewChild('assign_to_modal') assign_to_modal!: ElementRef;
 
-  constructor(private route: ActivatedRoute, private ticketService: TicketService, private commentService: CommentService) {
+  constructor(private route: ActivatedRoute, private ticketService: TicketService,
+              private commentService: CommentService, private userService: UserService) {
   }
 
   ngOnInit() {
@@ -31,6 +39,7 @@ export class TicketDetailsComponent {
     this.ticketService.getTicketById(this.ticketId).subscribe(ticket => {
       this.ticket = ticket;
       this.getAllComments();
+      this.getFollowers();
     })
   }
 
@@ -87,5 +96,65 @@ export class TicketDetailsComponent {
   loadMore() {
     this.pageNumber++;
     this.getAllComments();
+  }
+
+  follow() {
+    try {
+      this.ticketService.followTicket(this.ticketId).subscribe((res) => {
+        toast.success(res.message);
+        this.ticket.isFollowed = true;
+        this.getFollowers();
+      })
+    } catch (e) {
+      console.error(e);
+      toast.error('An error occurred while following the ticket');
+    }
+  }
+
+  unfollow() {
+    try {
+      this.ticketService.unfollowTicket(this.ticketId).subscribe((res) => {
+        this.getFollowers();
+        this.ticket.isFollowed = false;
+        toast.success(res.message);
+        this.getFollowers();
+      })
+    } catch (e) {
+      console.error(e);
+      toast.error('An error occurred while unfollowing the ticket');
+    }
+  }
+
+
+  followForOtherUser() {
+    if (this.newFollowerId == -1) {
+      toast.error('Please select a user to follow the ticket');
+      return;
+    }
+    try {
+      this.ticketService.followForOtherUser(this.ticketId, this.newFollowerId).subscribe((res) => {
+        toast.success(res.message);
+        this.assign_to_modal.nativeElement.close();
+        this.ticketService.getIsTicketFollowed(this.ticketId).subscribe((res) => {
+          this.ticket.isFollowed = res.isFollowed;
+          this.getFollowers();
+        })
+      })
+    } catch (e) {
+      toast.error('An error occurred while following the ticket for other user');
+    }
+  }
+
+  getUsers() {
+    this.userService.getAllUsers().subscribe(users => {
+      this.users = users;
+    });
+  }
+
+  getFollowers() {
+    this.ticketService.getFollowers(this.ticketId).subscribe((followers) => {
+      this.followers = followers;
+      this.displayedUsers = this.users.filter(user => !this.followers.some(follower => follower.email === user.email));
+    })
   }
 }
