@@ -1,5 +1,5 @@
-<div class="flex flex-col gap-8 mt-20 w-[90vw]" *ngIf="ticket">
-  <div class="flex items-center justify-center">
+<div class="grid grid-cols-8 gap-3  w-[100vw] mt-20 p-10" *ngIf="ticket">
+  <div class="flex items-center justify-center col-start-1 col-end-9 row-start-1 row-end-2">
     <div class="flex items-stretch justify-center  bg-white shadow-xl">
       <div class="flex flex-col items-start justify-center  border-[2px] border-r-0 p-4 pt-2">
         <div class="font-semibold">Customer:</div>
@@ -40,16 +40,50 @@
 
   </div>
 
-  <div class="flex justify-start">
-    <div class="flex flex-col gap-2">
-      <button class="btn btn-primary text-white">New comment</button>
-      <div class="flex gap-1">
-        <button class="btn btn-primary text-white">Follow</button>
-        <button class="btn btn-primary text-white">Assign</button>
+  <div class="flex justify-start col-start-1 col-end-3 row-start-2 w-full">
+    <div class="flex flex-col gap-2 w-full">
+      <button class="btn btn-primary text-white" onclick="new_comment_modal.showModal()">New comment</button>
+      <div class="flex gap-1 w-full items-center justify-center">
+        <button class="btn btn-primary text-white w-[49%]">Follow</button>
+        <button class="btn btn-primary text-white w-[49%]">Assign</button>
       </div>
       <button class="btn btn-primary text-white">Email client</button>
       <button class="btn btn-warning text-white">Change Category</button>
       <button class="btn btn-error text-white">Close</button>
     </div>
+
+  </div>
+  <div class=" col-start-3 col-end-9 row-start-2 w-full">
+    <ul class="flex flex-col items-center justify-start gap-2 w-full">
+      <li *ngFor="let comment of comments" class="flex flex-col gap-2 border-[2px] bg-white p-4 py-2 w-full ">
+        <div class="flex items-center justify-between gap-2">
+          <div
+            class="font-semibold">{{ comment.author.firstName }} {{ comment.author.lastName }} {{ comment.author.email }}
+          </div>
+          <div>{{ comment.createdAt | date: 'medium' }}</div>
+        </div>
+        <div>{{ comment.content }}</div>
+      </li>
+      <li *ngIf="!last">
+        <button class="btn btn-primary text-white" (click)="loadMore()">Load more</button>
+      </li>
+    </ul>
   </div>
 </div>
+
+
+<dialog id="new_comment_modal" class="modal" #new_comment_modal>
+  <div class="modal-box max-w-screen-md bg-white">
+    <div class="py-4 w-full">
+      <textarea
+        placeholder="New comment..."
+        class="textarea textarea-bordered textarea-md w-full " [(ngModel)]="newCommentContent"></textarea>
+    </div>
+    <div class="modal-action">
+      <button class="btn btn-primary text-white" (click)="addComment()">Add</button>
+      <form method="dialog">
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>

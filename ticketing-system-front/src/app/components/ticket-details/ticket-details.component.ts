@@ -1,7 +1,10 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {TicketService} from "../../services/ticket.service";
 import {ActivatedRoute} from "@angular/router";
 import {Ticket} from "../../models/Ticket";
+import {toast} from "ngx-sonner";
+import {CommentService} from "../../services/comment.service";
+import {Comment} from "../../models/Comment";
 
 @Component({
   selector: 'app-ticket-details',
@@ -10,16 +13,24 @@ import {Ticket} from "../../models/Ticket";
 })
 export class TicketDetailsComponent {
 
-  ticketId: number=-1;
-  ticket!:Ticket;
+  ticketId: number = -1;
+  ticket!: Ticket;
+  newCommentContent: string = '';
+  pageNumber: number = 0;
+  allPages: number = 0;
+  last: boolean = false;
+  comments: Comment[] = [];
 
-  constructor(private route: ActivatedRoute, private ticketService:TicketService) {}
+  @ViewChild('new_comment_modal') newCommentModal!: ElementRef;
+
+  constructor(private route: ActivatedRoute, private ticketService: TicketService, private commentService: CommentService) {
+  }
 
   ngOnInit() {
     this.ticketId = Number(this.route.snapshot.paramMap.get('id'));
     this.ticketService.getTicketById(this.ticketId).subscribe(ticket => {
       this.ticket = ticket;
-      console.log(this.ticket);
+      this.getAllComments();
     })
   }
 
@@ -50,5 +61,31 @@ export class TicketDetailsComponent {
       default:
         return '';
     }
+  }
+
+  getAllComments() {
+    this.commentService.getAllComments(this.ticketId, this.pageNumber, 10).subscribe((response) => {
+      this.pageNumber = response.number;
+      this.last = response.last;
+      this.allPages = response.totalPages;
+      this.comments.push(...response.content);
+    })
+  }
+
+  addComment() {
+    if (this.newCommentContent.length == 0) {
+      toast.error('Comment content cannot be empty');
+    }
+    this.commentService.addComment(this.ticketId, this.newCommentContent).subscribe((res) => {
+      this.comments.unshift(res);
+      this.newCommentContent = '';
+      toast.success('Comment added successfully');
+      this.newCommentModal.nativeElement.close();
+    })
+  }
+
+  loadMore() {
+    this.pageNumber++;
+    this.getAllComments();
   }
 }
