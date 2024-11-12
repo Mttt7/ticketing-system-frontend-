@@ -5,6 +5,7 @@ import {TicketsResponseDto} from "../models/TicketsResponseDto";
 import {Observable} from "rxjs";
 import {Ticket} from "../models/Ticket";
 import {UserProfile} from "../models/UserProfile";
+import {StatsDto} from "../models/StatsDto";
 
 @Injectable({
   providedIn: 'root'
@@ -52,5 +53,8 @@ export class TicketService {
 
   getFollowers(ticketId: number): Observable<UserProfile[]> {
     return this.http.get<UserProfile[]>(this.ticketUrl + "/" + ticketId + '/followers');
+  }
+  getStats():Observable<StatsDto> {
+    return this.http.get<StatsDto>(this.ticketUrl + '/dashboard/stats');
   }
 }
