@@ -1,4 +1,3 @@
-
 <div class="flex items-center justify-center w-screen">
 
 
@@ -17,12 +16,14 @@ pb-2 w-[95%]">
         </div>
         <div class="flex flex-col">
           <label for="customerEmail" class="block text-sm font-medium text-gray-700">Customer Email</label>
-          <input id="customerEmail" formControlName="customerEmail" type="email" class="input input-bordered w-full mt-1">
+          <input id="customerEmail" formControlName="customerEmail" type="email"
+                 class="input input-bordered w-full mt-1">
         </div>
 
         <div class="flex flex-col">
           <label for="customerPhone" class="block text-sm font-medium text-gray-700">Customer Phone</label>
-          <input id="customerPhone" formControlName="customerPhone" type="text" class="input input-bordered w-full mt-1">
+          <input id="customerPhone" formControlName="customerPhone" type="text"
+                 class="input input-bordered w-full mt-1">
         </div>
 
         <div class="flex flex-col">
@@ -33,6 +34,7 @@ pb-2 w-[95%]">
         <div class="flex flex-col">
           <label for="channel">Channel</label>
           <select id="channel" formControlName="channel" class="input input-bordered w-full mt-1">
+            <option value="" selected></option>
             <option *ngFor="let channel of channels" [value]="channel">{{ channel }}</option>
           </select>
         </div>
@@ -64,7 +66,7 @@ pb-2 w-[95%]">
         <div class="flex flex-col">
           <label for="openedById" class="block text-sm font-medium text-gray-700">Opened By</label>
           <select id="openedById" formControlName="openedById" class="input input-bordered w-full mt-1">
-            <option value="" selected></option> <!-- Puste pole -->
+            <option value="" selected></option>
             <option *ngFor="let user of users"
                     [value]="user.id">{{ user.firstName }} {{ user.lastName }} {{ user.email }}
             </option>
@@ -74,7 +76,7 @@ pb-2 w-[95%]">
         <div class="flex flex-col">
           <label for="closedById" class="block text-sm font-medium text-gray-700">Closed By</label>
           <select id="closedById" formControlName="closedById" class="input input-bordered w-full mt-1">
-            <option value="" selected></option> <!-- Puste pole -->
+            <option value="" selected></option>
             <option *ngFor="let user of users"
                     [value]="user.id">{{ user.firstName }} {{ user.lastName }} {{ user.email }}
             </option>
@@ -93,10 +95,33 @@ pb-2 w-[95%]">
                  class="input input-bordered w-full mt-1">
         </div>
 
+
         <div class="flex flex-col">
-          <label for="isOpen" class="block text-sm font-medium text-gray-700">Is Open</label>
-          <input id="isOpen" formControlName="isOpen" type="checkbox" class="checkbox checkbox-primary mt-1">
+          <label for="isOpen" class="block text-sm font-medium text-gray-700">Open</label>
+          <select id="isOpen" formControlName="isOpen" class="input input-bordered w-full mt-1">
+            <option value="" selected></option>
+            <option [value]="true">
+              Yes
+            </option>
+            <option [value]="false">
+              No
+            </option>
+          </select>
         </div>
+
+        <div class="flex flex-col">
+          <label for="isFollowed" class="block text-sm font-medium text-gray-700">Followed</label>
+          <select id="isFollowed" formControlName="isFollowed" class="input input-bordered w-full mt-1">
+            <option value="" selected></option>
+            <option [value]="true">
+              Yes
+            </option>
+            <option [value]="false">
+              No
+            </option>
+          </select>
+        </div>
+
       </div>
 
       <button type="submit" class="btn btn-primary text-white mt-4">Search</button>
@@ -115,6 +140,7 @@ pb-2 w-[95%]">
           <th>Subcategory</th>
           <th>Priority</th>
           <th>Is Open</th>
+          <th>Is Followed</th>
           <th>Opened By</th>
           <th>Closed By</th>
           <th>Created At</th>
@@ -126,12 +152,14 @@ pb-2 w-[95%]">
         <tr *ngFor="let ticket of tickets">
           <td>{{ ticket.id }}</td>
           <td>{{ ticket.customer.firstName }} {{ ticket.customer.lastName }}</td>
-          <td>{{ ticket.content }}</td>
+          <td *ngIf="ticket.content.length<30">{{ ticket.content }}</td>
+          <td *ngIf="ticket.content.length>=30">{{ ticket.content.slice(0, 30) }}...</td>
           <td>{{ ticket.channel }}</td>
           <td>{{ ticket.category?.name }}</td>
           <td>{{ ticket.subcategory?.name }}</td>
           <td>{{ ticket.priority }}</td>
           <td>{{ ticket.isOpen ? '✅' : '❌' }}</td>
+          <td>{{ ticket.isFollowed ? '✅' : '❌' }}</td>
           <td>{{ ticket.openedBy?.firstName }} {{ ticket.openedBy?.lastName }}</td>
           <td>{{ ticket.closedBy?.firstName }} {{ ticket.closedBy?.lastName }}</td>
           <td>{{ ticket.createdAt | date:'short' }}</td>

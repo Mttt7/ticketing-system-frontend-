@@ -4,7 +4,8 @@ export interface SearchTicketCriteria {
   customerEmail: string;
   customerPhone: string;
   content: string;
-  isOpen: boolean;
+  isOpen?: boolean;
+  isFollowed?: boolean;
   channel: string;
   categoryId: number;
   subcategoryId: number;
