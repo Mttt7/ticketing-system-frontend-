@@ -1,0 +1,37 @@
+<div class="flex flex-col items-center justify-center w-screen mt-20" *ngIf="department && users">
+  <div class="text-2xl">
+    {{ department.name }}
+  </div>
+
+  <div class="overflow-x-auto w-full px-2 mt-5">
+    <table class="table table-md px-2">
+      <thead>
+      <tr>
+        <th>id</th>
+        <th>Email</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <th>{{ user.id }}</th>
+        <td>{{ user.email }}</td>
+        <td>{{ user.firstName }}</td>
+        <td>{{ user.lastName }}</td>
+        <td class="flex items-center justify-center gap-2">
+
+
+        </td>
+
+      </tr>
+
+    </table>
+  </div>
+  <div class="join mt-10" *ngIf="users.length>0">
+    <button class="join-item btn" (click)="previousPage()" *ngIf="this.pageNumber > 0">«</button>
+    <button class="join-item btn">Page {{ pageNumber + 1 }}/{{ allPages }}</button>
+    <button class="join-item btn" *ngIf="!last" (click)="nextPage()">»</button>
+  </div>
+</div>

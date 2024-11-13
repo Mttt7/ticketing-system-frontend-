@@ -1,0 +1,7 @@
+<div class="flex items-start justify-center gap-3 flex-wrap mt-20 h-screen">
+  <div *ngFor="let department of departments" class="p-3 bg-white rounded-xl shadow-xl hover:shadow-md  cursor-pointer">
+    <div [routerLink]="['./', department.id]">
+      {{ department.name }}
+    </div>
+  </div>
+</div>
