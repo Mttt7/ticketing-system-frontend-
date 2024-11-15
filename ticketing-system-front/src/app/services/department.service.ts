@@ -25,4 +25,12 @@ export class DepartmentService {
   getDepartmentById(departmentId: number): Observable<Department> {
     return this.http.get<Department>(this.departmentUrl + `/${departmentId}`);
   }
+
+  addSubcategoryToDepartment(departmentId: number, subcategoryId: number): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(this.departmentUrl + `/add-subcategory/${departmentId}/${subcategoryId}`, {});
+  }
+
+  removeSubcategoryFromDepartment(departmentId: number, subcategoryId: number): Observable<{ message: string }> {
+    return this.http.delete<{ message: string }>(this.departmentUrl + `/remove-subcategory/${departmentId}/${subcategoryId}`, {});
+  }
 }

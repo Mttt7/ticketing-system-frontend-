@@ -1,7 +1,18 @@
 <div class="flex items-start justify-center gap-3 flex-wrap mt-20 h-screen">
   <div *ngFor="let department of departments" class="p-3 bg-white rounded-xl shadow-xl hover:shadow-md  cursor-pointer">
-    <div [routerLink]="['./', department.id]">
-      {{ department.name }}
+    <div [routerLink]="['./', department.id]" class="flex flex-col items-center justify-start gap-2">
+      <div class="font-semibold text-center">
+        {{ department.name }}
+      </div>
+      <ul>
+        <li *ngFor="let subcategory of department.subcategories">
+          {{ subcategory.category.name }} - {{ subcategory.name }}
+        </li>
+      </ul>
     </div>
   </div>
 </div>
+
+
+
+

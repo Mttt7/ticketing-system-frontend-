@@ -2,6 +2,18 @@
   <div class="text-2xl">
     {{ department.name }}
   </div>
+  <ul>
+    <li *ngFor="let subcategory of department.subcategories" class="flex items-center justify-center gap-2">
+      {{ subcategory.category.name }} - {{ subcategory.name }}
+      <div class="text-sm cursor-pointer" *ngIf="isAdmin" (click)="removeSubcategoryFromDepartment(subcategory.id)">❌
+      </div>
+    </li>
+  </ul>
+  <button class="btn btn-primary btn-sm mt-2
+
+   text-white" onclick="add_subcategory_modal.showModal()">
+    Add Subcategory
+  </button>
 
   <div class="overflow-x-auto w-full px-2 mt-5">
     <table class="table table-md px-2">
@@ -21,10 +33,7 @@
         <td>{{ user.firstName }}</td>
         <td>{{ user.lastName }}</td>
         <td class="flex items-center justify-center gap-2">
-
-
         </td>
-
       </tr>
 
     </table>
@@ -35,3 +44,39 @@
     <button class="join-item btn" *ngIf="!last" (click)="nextPage()">»</button>
   </div>
 </div>
+
+
+<dialog id="add_subcategory_modal" class="modal" #add_subcategory_modal>
+  <div class="modal-box max-w-screen-xs p-5">
+    <div class="py-4 w-full">
+      <form [formGroup]="addSubcategoryForm" class=" p-4">
+        <div class="flex flex-wrap items-center justify-center gap-4 py-3">
+          <div class="flex flex-col">
+            <label for="categoryId" class="block text-sm font-medium text-gray-700">Category</label>
+            <select id="categoryId" formControlName="categoryId" class="input input-bordered w-full mt-1"
+                    (change)="categoryChanged()">
+              <option value="" selected></option>
+              <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select>
+          </div>
+
+          <div class="flex flex-col">
+            <label for="subcategoryId" class="block text-sm font-medium text-gray-700">Subcategory</label>
+            <select id="subcategoryId" formControlName="subcategoryId" class="input input-bordered w-full mt-1">
+              <option value="" selected></option>
+              <option *ngFor="let subcategory of subcategories" [value]="subcategory.id">{{ subcategory.name }}</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn btn-primary mx-2 text-white" type="submit" [disabled]="addSubcategoryForm.invalid"
+                (click)="addSubcategory()">Add
+        </button>
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
