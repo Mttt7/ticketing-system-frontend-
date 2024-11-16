@@ -3,6 +3,8 @@ import {DepartmentService} from "../../services/department.service";
 import {Department} from "../../models/Department";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {toast} from "ngx-sonner";
+import {UserService} from "../../services/user.service";
+import {UserProfile} from "../../models/UserProfile";
 
 @Component({
   selector: 'app-departments',
@@ -12,6 +14,7 @@ import {toast} from "ngx-sonner";
 export class DepartmentsComponent {
   addNewDepartmentForm: FormGroup;
   departments: Department[] = [];
+  users: UserProfile[] = [];
   pageNumber: number = 0;
   allPages: number = 0;
   last: boolean = false;
@@ -61,4 +64,6 @@ export class DepartmentsComponent {
       }
     });
   }
+
+
 }

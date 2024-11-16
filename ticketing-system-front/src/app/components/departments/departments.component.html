@@ -1,5 +1,6 @@
 <div class="flex flex-col items-center justify-start gap-3 flex-wrap mt-20 h-[90vh]">
-  <button class="btn btn-primary btn-sm text-white" onclick="add_new_department_modal.showModal()">Add new Department
+  <button class="btn btn-primary btn-sm text-white" onclick="add_new_department_modal.showModal()">
+    Add new Department
   </button>
   <div *ngFor="let department of departments" class="p-3 bg-white rounded-xl shadow-xl hover:shadow-md  cursor-pointer">
     <div [routerLink]="['./', department.id]" class="flex flex-col items-center justify-start gap-2">
@@ -41,5 +42,4 @@
     </div>
   </div>
 </dialog>
-
 

@@ -8,6 +8,7 @@ import {Category} from "../../models/Category";
 import {Subcategory} from "../../models/Subcategory";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {toast} from "ngx-sonner";
+import {UserService} from "../../services/user.service";
 
 @Component({
   selector: 'app-department',
@@ -16,7 +17,9 @@ import {toast} from "ngx-sonner";
 })
 export class DepartmentComponent {
   addSubcategoryForm: FormGroup;
+  assignNewUserForm: FormGroup;
   departmentId!: number;
+  assignedUsers: UserProfile[] = [];
   users: UserProfile[] = [];
   department!: Department;
   pageNumber: number = 0;
@@ -28,18 +31,22 @@ export class DepartmentComponent {
 
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
-              private departmentService: DepartmentService, private categoryService: CategoryService) {
+              private departmentService: DepartmentService, private categoryService: CategoryService,
+              private userService: UserService) {
     this.addSubcategoryForm = this.fb.group({
       categoryId: ['', Validators.required],
       subcategoryId: ['', Validators.required],
+    });
+    this.assignNewUserForm = this.fb.group({
+      userId: ['', Validators.required]
     });
   }
 
   ngOnInit() {
     this.departmentId = Number(this.route.snapshot.paramMap.get('id'));
-    this.getUsers();
     this.getDepartment();
     this.loadCategories();
+    this.getAssignedUsers();
   }
 
   getDepartment() {
@@ -48,12 +55,19 @@ export class DepartmentComponent {
     })
   }
 
-  getUsers() {
+  getAllUsers() {
+    this.userService.getAllUsers().subscribe(users => {
+      this.users = users.filter(user => !this.assignedUsers.find(assignedUser => assignedUser.id === user.id));
+    });
+  }
+
+  getAssignedUsers() {
     this.departmentService.getUsersByDepartmentId(this.departmentId, this.pageNumber, 10).subscribe((response) => {
       this.pageNumber = response.number;
       this.last = response.last;
       this.allPages = response.totalPages;
-      this.users = response.content;
+      this.assignedUsers = response.content;
+      this.getAllUsers();
     })
   }
 
@@ -73,18 +87,17 @@ export class DepartmentComponent {
 
   nextPage() {
     this.pageNumber++;
-    this.getUsers();
+    this.getAllUsers();
   }
 
   previousPage() {
     if (this.pageNumber == 0) return
     this.pageNumber--;
-    this.getUsers();
+    this.getAllUsers();
   }
 
   removeSubcategoryFromDepartment(subcategoryId: number) {
     this.departmentService.removeSubcategoryFromDepartment(this.departmentId, subcategoryId).subscribe((response) => {
-      console.log(response);
       this.getDepartment();
     });
   }
@@ -100,5 +113,29 @@ export class DepartmentComponent {
     } finally {
       this.addSubcategoryForm.reset();
     }
+  }
+
+  assignUserToDepartment() {
+    this.departmentService.assignUserToDepartment(this.departmentId, this.assignNewUserForm.get('userId')?.value).subscribe({
+      next: (response) => {
+        toast.success(response.message);
+        this.getAssignedUsers();
+      },
+      error: (error) => {
+        toast.error(error.error.message);
+      }
+    })
+  }
+
+  removeUserFromDepartment(userId: number) {
+    this.departmentService.removeUserFromDepartment(this.departmentId, userId).subscribe({
+      next: (response) => {
+        toast.success(response.message);
+        this.getAssignedUsers();
+      },
+      error: (error) => {
+        toast.error(error.error.message);
+      }
+    });
   }
 }

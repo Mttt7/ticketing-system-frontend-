@@ -41,4 +41,12 @@ export class DepartmentService {
   addNewDepartment(name: { name: string }): Observable<{ message: string }> {
     return this.http.post<{ message: string }>(this.departmentUrl + "/", name);
   }
+
+  assignUserToDepartment(departmentId: number, userId: number): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(this.departmentUrl + `/assign/${userId}/${departmentId}`, {});
+  }
+
+  removeUserFromDepartment(departmentId: number, userId: number) {
+    return this.http.delete<{ message: string }>(this.departmentUrl + `/remove-user/${userId}/${departmentId}`);
+  }
 }

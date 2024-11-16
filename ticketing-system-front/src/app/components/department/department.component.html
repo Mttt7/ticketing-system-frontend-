@@ -1,4 +1,4 @@
-<div class="flex flex-col items-center justify-center w-screen mt-20" *ngIf="department && users">
+<div class="flex flex-col items-center justify-center w-screen mt-20 gap-2" *ngIf="department">
   <div class="text-2xl">
     {{ department.name }}
   </div>
@@ -14,6 +14,9 @@
    text-white" onclick="add_subcategory_modal.showModal()">
     Add Subcategory
   </button>
+  <button class="btn btn-primary btn-sm text-white" onclick="assign_user_modal.showModal()">
+    Assign User
+  </button>
 
   <div class="overflow-x-auto w-full px-2 mt-5">
     <table class="table table-md px-2">
@@ -23,22 +26,22 @@
         <th>Email</th>
         <th>First Name</th>
         <th>Last Name</th>
-
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let user of users">
+      <tr *ngFor="let user of assignedUsers">
         <th>{{ user.id }}</th>
         <td>{{ user.email }}</td>
         <td>{{ user.firstName }}</td>
         <td>{{ user.lastName }}</td>
-        <td class="flex items-center justify-center gap-2">
+        <td class="flex items-center justify-center gap-2 cursor-pointer" (click)="removeUserFromDepartment(user.id)">
+           ❌
         </td>
       </tr>
 
     </table>
   </div>
-  <div class="join mt-10" *ngIf="users.length>0">
+  <div class="join mt-10" *ngIf="assignedUsers.length>0">
     <button class="join-item btn" (click)="previousPage()" *ngIf="this.pageNumber > 0">«</button>
     <button class="join-item btn">Page {{ pageNumber + 1 }}/{{ allPages }}</button>
     <button class="join-item btn" *ngIf="!last" (click)="nextPage()">»</button>
@@ -75,6 +78,33 @@
         <button class="btn btn-primary mx-2 text-white" type="submit" [disabled]="addSubcategoryForm.invalid"
                 (click)="addSubcategory()">Add
         </button>
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+<dialog id="assign_user_modal" class="modal">
+  <div class="modal-box">
+    <div class="py-4 w-full">
+      <form [formGroup]="assignNewUserForm" (ngSubmit)="assignUserToDepartment()" class="p-4 w-full">
+        <div class="flex flex-col">
+          <label for="closedById" class="block text-sm font-medium text-gray-700">User</label>
+          <select id="closedById" formControlName="userId" class="input input-bordered w-full mt-1">
+            <option value="" selected></option>
+            <option *ngFor="let user of users"
+                    [value]="user.id">{{ user.firstName }} {{ user.lastName }} {{ user.email }}
+            </option>
+          </select>
+        </div>
+
+      </form>
+    </div>
+    <div class="modal-action">
+      <button type="submit" class="mr-1 btn btn-primary text-white" [disabled]="assignNewUserForm.invalid"
+              (click)="assignUserToDepartment()">Add
+      </button>
+      <form method="dialog">
+
         <button class="btn">Close</button>
       </form>
     </div>
