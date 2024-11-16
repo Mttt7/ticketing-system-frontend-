@@ -27,10 +27,18 @@ export class DepartmentService {
   }
 
   addSubcategoryToDepartment(departmentId: number, subcategoryId: number): Observable<{ message: string }> {
-    return this.http.post<{ message: string }>(this.departmentUrl + `/add-subcategory/${departmentId}/${subcategoryId}`, {});
+    return this.http.post<{
+      message: string
+    }>(this.departmentUrl + `/add-subcategory/${departmentId}/${subcategoryId}`, {});
   }
 
   removeSubcategoryFromDepartment(departmentId: number, subcategoryId: number): Observable<{ message: string }> {
-    return this.http.delete<{ message: string }>(this.departmentUrl + `/remove-subcategory/${departmentId}/${subcategoryId}`, {});
+    return this.http.delete<{
+      message: string
+    }>(this.departmentUrl + `/remove-subcategory/${departmentId}/${subcategoryId}`, {});
+  }
+
+  addNewDepartment(name: { name: string }): Observable<{ message: string }> {
+    return this.http.post<{ message: string }>(this.departmentUrl + "/", name);
   }
 }
