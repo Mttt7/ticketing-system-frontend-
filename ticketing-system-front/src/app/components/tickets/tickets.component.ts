@@ -1,13 +1,13 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {TicketService} from "../../services/ticket.service";
+import {TicketService} from "../../services/api/ticket.service";
 import {Ticket} from "../../models/Ticket";
-import {EnumService} from "../../services/enum.service";
+import {EnumService} from "../../services/api/enum.service";
 import {Channel} from "../../models/Channel";
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../services/api/user.service";
 import {Category} from "../../models/Category";
 import {Subcategory} from "../../models/Subcategory";
-import {CategoryService} from "../../services/category.service";
+import {CategoryService} from "../../services/api/category.service";
 import {TicketRequestDto} from "../../models/TicketRequestDto";
 import {toast} from "ngx-sonner";
 import {Customer} from "../../models/Customer";

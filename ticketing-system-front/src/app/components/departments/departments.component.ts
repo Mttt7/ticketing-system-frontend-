@@ -1,9 +1,8 @@
 import {Component} from '@angular/core';
-import {DepartmentService} from "../../services/department.service";
+import {DepartmentService} from "../../services/api/department.service";
 import {Department} from "../../models/Department";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {toast} from "ngx-sonner";
-import {UserService} from "../../services/user.service";
 import {UserProfile} from "../../models/UserProfile";
 
 @Component({
@@ -64,6 +63,4 @@ export class DepartmentsComponent {
       }
     });
   }
-
-
 }

@@ -1,15 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-import { UserService } from '../../services/user.service';
-import { LoginValidators } from '../../validators/login-validator';
-import { RegisterRequestPayload } from '../../models/RegisterRequestPayload';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators,} from '@angular/forms';
+import {AuthService} from '../../services/api/auth.service';
+import {Router} from '@angular/router';
+import {UserService} from '../../services/api/user.service';
+import {LoginValidators} from '../../validators/login-validator';
+import {RegisterRequestPayload} from '../../models/RegisterRequestPayload';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +23,8 @@ export class RegisterComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private userService: UserService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.credentialsFormGroup = this.formBuilder.group({
@@ -70,18 +66,23 @@ export class RegisterComponent implements OnInit {
       }),
     });
   }
+
   get username() {
     return this.credentialsFormGroup.get('credentials.username');
   }
+
   get password() {
     return this.credentialsFormGroup.get('credentials.password');
   }
+
   get passwordRepeated() {
     return this.credentialsFormGroup.get('credentials.passwordRepeated');
   }
+
   get firstName() {
     return this.credentialsFormGroup.get('credentials.firstName');
   }
+
   get lastName() {
     return this.credentialsFormGroup.get('credentials.lastName');
   }

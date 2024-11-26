@@ -2,7 +2,7 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {Customer} from "../../models/Customer";
 import {Ticket} from "../../models/Ticket";
-import {CustomersService} from "../../services/customers.service";
+import {CustomersService} from "../../services/api/customers.service";
 import {SearchCustomerCriteria} from "../../models/SearchCustomerCriteria";
 
 @Component({

@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { LoginResponsePayload } from '../models/LoginResponsePayload';
-import { LoginRequestPayload } from '../models/LoginRequestPayload';
-import { HttpClient } from '@angular/common/http';
-import { RegisterRequestPayload } from '../models/RegisterRequestPayload';
-import { Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {LoginResponsePayload} from '../../models/LoginResponsePayload';
+import {LoginRequestPayload} from '../../models/LoginRequestPayload';
+import {HttpClient} from '@angular/common/http';
+import {RegisterRequestPayload} from '../../models/RegisterRequestPayload';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 export class AuthService {
   private authUrl = 'http://localhost:8080/api/v1/auth';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+  }
 
   getLoggedInUserId(): string | null {
     return localStorage.getItem('userId');
@@ -24,6 +25,7 @@ export class AuthService {
       credentials
     );
   }
+
   getSelfId(): Observable<number> | null {
     if (!localStorage.getItem('jwtToken')) return null;
     return this.http.get<number>(this.authUrl + '/selfId');

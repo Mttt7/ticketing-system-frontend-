@@ -1,12 +1,12 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {TicketService} from "../../services/ticket.service";
+import {TicketService} from "../../services/api/ticket.service";
 import {ActivatedRoute} from "@angular/router";
 import {Ticket} from "../../models/Ticket";
 import {toast} from "ngx-sonner";
-import {CommentService} from "../../services/comment.service";
+import {CommentService} from "../../services/api/comment.service";
 import {Comment} from "../../models/Comment";
 import {UserProfile} from "../../models/UserProfile";
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../services/api/user.service";
 
 @Component({
   selector: 'app-ticket-details',
@@ -39,7 +39,7 @@ export class TicketDetailsComponent {
     this.ticketService.getTicketById(this.ticketId).subscribe(ticket => {
       this.ticket = ticket;
       this.getAllComments();
-      this.getFollowers();
+      this.getUsers();
     })
   }
 
@@ -84,6 +84,7 @@ export class TicketDetailsComponent {
   addComment() {
     if (this.newCommentContent.length == 0) {
       toast.error('Comment content cannot be empty');
+      return;
     }
     this.commentService.addComment(this.ticketId, this.newCommentContent).subscribe((res) => {
       this.comments.unshift(res);
@@ -148,6 +149,7 @@ export class TicketDetailsComponent {
   getUsers() {
     this.userService.getAllUsers().subscribe(users => {
       this.users = users;
+      this.getFollowers();
     });
   }
 

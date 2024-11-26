@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
-import {AuthService} from '../../services/auth.service';
+import {AuthService} from '../../services/api/auth.service';
 import {ActivatedRoute} from '@angular/router';
 import {LoginRequestPayload} from '../../models/LoginRequestPayload';
 

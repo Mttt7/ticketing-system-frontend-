@@ -9,7 +9,12 @@
       <a routerLink="/dashboard" class="text-xl font-bold text-black"
       >TSystem</a
       >
-      <a routerLink="/dashboard" class="ml-4 text-green-400 font-semibold">Dashboard</a>
+      <div class="indicator">
+        <span
+          class="indicator-item badge badge-sm badge-ghost bg-transparent border-none -right-1 top-1 font-semibold">{{ unreadNotifications }}</span>
+        <a routerLink="/dashboard" class="ml-4 text-green-400 font-semibold">Dashboard</a>
+      </div>
+
       <a routerLink="/departments" class="ml-4 text-green-400 font-semibold">Departments</a>
       <a routerLink="/customers" class="ml-4 text-red-400 font-semibold">Customers</a>
       <a routerLink="/tickets" class="ml-4 text-blue-500 font-semibold">Tickets</a>

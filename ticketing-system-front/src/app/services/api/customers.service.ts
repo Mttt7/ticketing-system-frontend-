@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {SearchCustomerCriteria} from "../models/SearchCustomerCriteria";
-import {CustomerResponseDto} from "../models/CustomerResponseDto";
-import {Customer} from "../models/Customer";
+import {SearchCustomerCriteria} from "../../models/SearchCustomerCriteria";
+import {CustomerResponseDto} from "../../models/CustomerResponseDto";
+import {Customer} from "../../models/Customer";
 
 @Injectable({
   providedIn: 'root'

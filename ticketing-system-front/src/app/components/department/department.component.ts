@@ -1,14 +1,14 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {DepartmentService} from "../../services/department.service";
+import {DepartmentService} from "../../services/api/department.service";
 import {UserProfile} from "../../models/UserProfile";
 import {Department} from "../../models/Department";
-import {CategoryService} from "../../services/category.service";
+import {CategoryService} from "../../services/api/category.service";
 import {Category} from "../../models/Category";
 import {Subcategory} from "../../models/Subcategory";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {toast} from "ngx-sonner";
-import {UserService} from "../../services/user.service";
+import {UserService} from "../../services/api/user.service";
 
 @Component({
   selector: 'app-department',

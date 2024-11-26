@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CustomersService} from "../../services/customers.service";
+import {CustomersService} from "../../services/api/customers.service";
 import {SearchCustomerCriteria} from "../../models/SearchCustomerCriteria";
 import {Customer} from "../../models/Customer";
 import {toast} from 'ngx-sonner';
