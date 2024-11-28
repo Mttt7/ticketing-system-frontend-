@@ -30,7 +30,7 @@ export class DepartmentsComponent {
   }
 
   getAllDepartments() {
-    this.departmentService.getAllDepartments(this.pageNumber, 10).subscribe(response => {
+    this.departmentService.getAllDepartments(this.pageNumber, 12).subscribe(response => {
       this.pageNumber = response.number;
       this.last = response.last;
       this.allPages = response.totalPages;
@@ -54,7 +54,7 @@ export class DepartmentsComponent {
 
     this.departmentService.addNewDepartment(this.addNewDepartmentForm.value).subscribe({
       next: (response) => {
-        toast.success(response.message);
+        toast.success("Department added successfully");
         this.getAllDepartments();
       },
       error: (e: { error: { error: string } }) => {

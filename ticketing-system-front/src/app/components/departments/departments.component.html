@@ -1,18 +1,39 @@
-<div class="flex flex-col items-center justify-start gap-3 flex-wrap mt-20 h-[90vh]">
-  <button class="btn btn-primary btn-sm text-white" onclick="add_new_department_modal.showModal()">
-    Add new Department
-  </button>
-  <div *ngFor="let department of departments" class="p-3 bg-white rounded-xl shadow-xl hover:shadow-md  cursor-pointer">
-    <div [routerLink]="['./', department.id]" class="flex flex-col items-center justify-start gap-2">
-      <div class="font-semibold text-center">
-        {{ department.name }}
-      </div>
-      <ul>
-        <li *ngFor="let subcategory of department.subcategories">
-          {{ subcategory.category.name }} - {{ subcategory.name }}
-        </li>
-      </ul>
+<div class="flex  items-start justify-center gap-5 flex-wrap mt-10 h-[91vh]">
+  <div class="flex flex-col items-center justify-center">
+    <button class="btn btn-primary btn-sm text-white mt-5" onclick="add_new_department_modal.showModal()">
+      Add new Department
+    </button>
+    <div class="join mt-2" *ngIf="departments.length>0">
+      <button class="join-item btn" (click)="previousPage()" *ngIf="pageNumber > 0">«</button>
+      <button class="join-item btn">Page {{ pageNumber + 1 }}/{{ allPages }}</button>
+      <button class="join-item btn" (click)="nextPage()" *ngIf="!last">»</button>
     </div>
+  </div>
+
+  <div class="overflow-x-auto  h-full pb-10 mt-6">
+    <table class="table table-xs table-pin-rows table-pin-cols">
+      <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Categories</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let department of departments" [routerLink]="['./', department.id]" class="cursor-pointer">
+        <th>{{department.id}}</th>
+        <td>{{ department.name }}</td>
+        <td *ngIf="department.subcategories.length>0">
+          {{department.subcategories[0].category.name}} - {{department.subcategories[0].name}}
+          <div class="lg:tooltip" data-tip="hello">
+            <div class="" *ngFor="let subcategory of department.subcategories">{{ subcategory.category.name }} - {{ subcategory.name }}</div>
+          </div>
+        </td>
+        <td></td>
+      </tr>
+
+      </tbody>
+    </table>
   </div>
 </div>
 
