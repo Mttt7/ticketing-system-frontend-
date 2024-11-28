@@ -7,6 +7,7 @@ import {toast} from "ngx-sonner";
 import {ConverterService} from "../../services/helpers/converter.service";
 import {NotificationHelperService} from "../../services/helpers/notification.helper.service";
 import {Router} from "@angular/router";
+import {WebsocketService} from "../../services/helpers/websocket.service";
 
 @Component({
   selector: 'app-dashboard',
@@ -23,20 +24,24 @@ export class DashboardComponent {
 
   constructor(private ticketService: TicketService, private notificationService: NotificationService,
               private converterService: ConverterService, private notificationHelperService: NotificationHelperService,
-              private router: Router) {
+              private router: Router, private webSocketService: WebsocketService) {
   }
 
   ngOnInit() {
     this.getStats();
     this.getNotifications();
     this.updateUnreadNotifications();
-    this.notificationHelperService.$unreadNotifications.subscribe({
-      next: (data) => {
-        this.unreadNotifications = data;
-      }
-    });
-  }
+    this.webSocketService.$newNotification.subscribe({
+      next: (message) => {
+        this.getNotifications(
+          () => {
+            this.notifications.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+          }
+        );
 
+      }
+    })
+  }
 
   getStats() {
     this.ticketService.getStats().subscribe({
@@ -50,11 +55,14 @@ export class DashboardComponent {
     });
   }
 
-  getNotifications() {
+  getNotifications(callback?: () => void) {
     this.notificationService.getAllNotifications(this.pageNumber, this.onlyUnread).subscribe({
       next: (data) => {
         this.notifications.push(...data.content);
         this.last = data.last;
+        if (callback) {
+          callback();
+        }
       },
       error: (error) => {
         toast.error(error.error.message);

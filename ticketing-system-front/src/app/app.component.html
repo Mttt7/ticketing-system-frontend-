@@ -18,6 +18,9 @@
       <a routerLink="/departments" class="ml-4 text-green-400 font-semibold">Departments</a>
       <a routerLink="/customers" class="ml-4 text-red-400 font-semibold">Customers</a>
       <a routerLink="/tickets" class="ml-4 text-blue-500 font-semibold">Tickets</a>
+
+      <a routerLink="/tickets" *ngIf="userIsLoggedIn()" class="ml-4 text-blue-500 font-semibold">Admin Panel</a>
+
     </div>
 
     <div class="ml-auto mr-6" *ngIf="!userIsLoggedIn()">
@@ -25,8 +28,9 @@
       <a routerLink="/register" class="ml-4 text-blue-500">Register</a>
     </div>
     <div class="ml-auto" *ngIf="userIsLoggedIn()">
-      <a routerLink="/tickets" class="mr-4 text-blue-500 font-semibold">Admin Panel</a>
+      <a routerLink="/profile" class=" text-blue-500  font-semibold">{{ user.firstName }} {{ user.lastName }}</a>
     </div>
+
   </div>
 
   <router-outlet class=""></router-outlet>

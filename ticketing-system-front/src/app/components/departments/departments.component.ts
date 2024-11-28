@@ -35,7 +35,6 @@ export class DepartmentsComponent {
       this.last = response.last;
       this.allPages = response.totalPages;
       this.departments = response.content;
-      console.log(this.departments);
     })
   }
 

@@ -112,7 +112,6 @@ export class RegisterComponent implements OnInit {
         if (data.message == 'success') {
           this.router.navigateByUrl('/login?registered=true');
         } else {
-          console.log(data);
         }
       });
     } else {

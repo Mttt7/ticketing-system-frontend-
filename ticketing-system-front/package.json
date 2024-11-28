@@ -28,6 +28,8 @@
     "firebase": "^10.13.2",
     "ngx-sonner": "^2.0.2",
     "rxjs": "~7.8.0",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },
@@ -37,6 +39,8 @@
     "@angular/compiler-cli": "^18.0.0",
     "@ngx-env/builder": "^18.0.1",
     "@types/jasmine": "~5.1.0",
+    "@types/sockjs-client": "^1.5.4",
+    "@types/stompjs": "^2.3.9",
     "autoprefixer": "^10.4.19",
     "jasmine-core": "~5.1.0",
     "karma": "~6.4.0",

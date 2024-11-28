@@ -48,8 +48,9 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.credentials).subscribe(
       (data) => {
         this.authService.setToken(data);
+        this.authService.setSelfId(data.user.id);
+        this.authService.setUser(data.user);
         this.loading = false;
-        data.user.id
       },
       (error) => {
         this.loading = false;

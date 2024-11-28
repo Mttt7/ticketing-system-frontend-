@@ -5,6 +5,7 @@ import {LoginRequestPayload} from '../../models/LoginRequestPayload';
 import {HttpClient} from '@angular/common/http';
 import {RegisterRequestPayload} from '../../models/RegisterRequestPayload';
 import {Router} from '@angular/router';
+import {UserProfile} from "../../models/UserProfile";
 
 @Injectable({
   providedIn: 'root',
@@ -26,11 +27,6 @@ export class AuthService {
     );
   }
 
-  getSelfId(): Observable<number> | null {
-    if (!localStorage.getItem('jwtToken')) return null;
-    return this.http.get<number>(this.authUrl + '/selfId');
-  }
-
   register(registerPayload: RegisterRequestPayload): Observable<any> {
     return this.http.post(this.authUrl + '/register', registerPayload);
   }
@@ -45,6 +41,10 @@ export class AuthService {
     localStorage.setItem('jwtToken', token.accessToken);
   }
 
+  getToken(): string | null {
+    return localStorage.getItem('jwtToken');
+  }
+
   logout() {
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('userId');
@@ -53,6 +53,18 @@ export class AuthService {
 
   userIsLoggedIn(): boolean {
     return localStorage.getItem('jwtToken') !== null;
+  }
+
+  setSelfId(id: number) {
+    localStorage.setItem('userId', id.toString());
+  }
+
+  setUser(user: UserProfile) {
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  getLoggedInUser() {
+    return JSON.parse(localStorage.getItem('user')!);
   }
 }
 
