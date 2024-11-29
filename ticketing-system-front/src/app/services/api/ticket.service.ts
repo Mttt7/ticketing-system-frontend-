@@ -58,4 +58,8 @@ export class TicketService {
   getStats(): Observable<StatsDto> {
     return this.http.get<StatsDto>(this.ticketUrl + '/dashboard/stats');
   }
+
+  closeTicket(ticketId: number): Observable<TicketsResponseDto> {
+    return this.http.post<TicketsResponseDto>(this.ticketUrl + "/" + ticketId + '/close', null);
+  }
 }

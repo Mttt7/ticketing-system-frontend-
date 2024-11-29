@@ -36,6 +36,10 @@ export class TicketDetailsComponent {
 
   ngOnInit() {
     this.ticketId = Number(this.route.snapshot.paramMap.get('id'));
+    this.getTicket();
+  }
+
+  getTicket(){
     this.ticketService.getTicketById(this.ticketId).subscribe(ticket => {
       this.ticket = ticket;
       this.getAllComments();
@@ -51,6 +55,15 @@ export class TicketDetailsComponent {
   }
 
   getClosedSince() {
+    const closedAt = new Date(this.ticket.closedAt);
+    const today = new Date();
+
+    closedAt.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+
+    if (closedAt.getTime() === today.getTime()) {
+      return 0;
+    }
     let closedSince = new Date(this.ticket.closedAt);
     let now = new Date();
     let timeDiff = Math.abs(now.getTime() - closedSince.getTime());
@@ -158,5 +171,18 @@ export class TicketDetailsComponent {
       this.followers = followers;
       this.displayedUsers = this.users.filter(user => !this.followers.some(follower => follower.email === user.email));
     })
+  }
+
+  closeTicket() {
+    try {
+      this.ticketService.closeTicket(this.ticketId).subscribe((res) => {
+        toast.success("Ticket closed successfully");
+        this.comments = [];
+        this.getTicket();
+      })
+    } catch (e) {
+      console.error(e);
+      toast.error('An error occurred while closing the ticket');
+    }
   }
 }

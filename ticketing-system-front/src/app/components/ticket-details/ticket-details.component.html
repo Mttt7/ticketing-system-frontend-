@@ -11,14 +11,14 @@
         <div class="font-semibold">Opened by:</div>
         <div>{{ ticket.openedBy.firstName }} {{ ticket.openedBy.lastName }}</div>
         <div>{{ ticket.openedBy.email }}</div>
-        <div>{{ ticket.createdAt | date: 'mediumDate' }}</div>
+        <div>{{ ticket.createdAt | date: 'medium' }}</div>
         <div>{{ ticket.channel.name }}</div>
       </div>
       <div *ngIf="ticket.closedAt" class="flex flex-col items-start justify-center border-[2px] border-r-0 p-4 pt-2 ">
         <div class="font-semibold">Closed by:</div>
         <div>{{ ticket.closedBy?.firstName }} {{ ticket.closedBy?.lastName }}</div>
         <div>{{ ticket.closedBy?.email }}</div>
-        <div>{{ ticket?.closedAt }}</div>
+        <div>{{ ticket?.closedAt | date: 'medium'}}</div>
       </div>
       <div class="flex flex-col items-start justify-center border-[2px] border-r-0 p-4 pt-2 ">
         <div class="font-semibold">Ticket #{{ ticket.id }}</div>
@@ -53,7 +53,8 @@
       </div>
       <button class="btn btn-primary text-white">Email client</button>
       <button class="btn btn-warning text-white">Change Category</button>
-      <button class="btn btn-error text-white">Close</button>
+      <button class="btn btn-error btn-disabled text-white" *ngIf="ticket.closedBy" >Close</button>
+      <button class="btn btn-error text-white" *ngIf="!ticket.closedBy" onclick="close_ticket_modal.showModal()">Close</button>
 
       <div class="overflow-x-auto">
         <div class="text-center font-semibold italic mb-2">Followers:</div>
@@ -81,7 +82,16 @@
   <div class=" col-start-3 col-end-9 row-start-2 w-full">
     <ul class="flex flex-col items-center justify-start gap-2 w-full">
       <li *ngFor="let comment of comments" class="flex flex-col gap-2 border-[2px] bg-white p-4 py-2 w-full ">
-        <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center justify-between gap-2" *ngIf="comment.commentType=='INTERNAL_SYSTEM'">
+          <div
+            class="font-semibold">
+            <div class="font-bold italic text-xs text-yellow-500">SYSTEM - ACTION by:</div>
+            <div> {{ comment.author.firstName }} {{ comment.author.lastName }} {{ comment.author.email }}</div>
+
+          </div>
+          <div>{{ comment.createdAt | date: 'medium' }}</div>
+        </div>
+        <div class="flex items-center justify-between gap-2" *ngIf="comment.commentType=='INTERNAL'">
           <div
             class="font-semibold">{{ comment.author.firstName }} {{ comment.author.lastName }} {{ comment.author.email }}
           </div>
@@ -108,6 +118,19 @@
       <button class="btn btn-primary text-white" (click)="addComment()">Add</button>
       <form method="dialog">
         <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="close_ticket_modal" class="modal" #close_ticket_modal>
+  <div class="modal-box max-w-screen-md bg-white">
+    Are your sure? Action cannot be undone.
+    <div class="modal-action">
+
+      <form method="dialog">
+        <button class="btn btn-error text-white" (click)="closeTicket()">Yes - Close Ticket</button>
+        <button class="btn">No</button>
       </form>
     </div>
   </div>
