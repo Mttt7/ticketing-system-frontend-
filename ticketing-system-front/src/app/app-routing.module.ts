@@ -8,18 +8,44 @@ import {TicketDetailsComponent} from "./components/ticket-details/ticket-details
 import {DashboardComponent} from "./components/dashboard/dashboard.component";
 import {DepartmentsComponent} from "./components/departments/departments.component";
 import {DepartmentComponent} from "./components/department/department.component";
-
+import {authGuard} from "./guards/auth.guard";
+import {LogoutComponent} from "./components/logout/logout.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'customers', component: CustomersComponent},
-  {path: 'departments', component: DepartmentsComponent},
-  {path: 'departments/:id', component: DepartmentComponent},
-  {path: 'tickets', component: TicketsComponent},
-  {path: 'tickets/:id', component: TicketDetailsComponent}
+  {path: 'logout', component: LogoutComponent},
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'customers',
+    component: CustomersComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'departments',
+    component: DepartmentsComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'departments/:id',
+    component: DepartmentComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'tickets',
+    component: TicketsComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'tickets/:id',
+    component: TicketDetailsComponent,
+    canActivate: [authGuard],
+  },
 ];
 
 @NgModule({

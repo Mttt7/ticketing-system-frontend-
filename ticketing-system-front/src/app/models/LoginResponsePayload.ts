@@ -1,6 +1,6 @@
-export class LoginResponsePayload {
-    constructor(public accessToken: string, public user: any) {
-        this.accessToken = accessToken;
-        this.user = user;
-    }
+import {UserProfile} from "./UserProfile";
+
+export interface LoginResponsePayload {
+  accessToken: string
+  user: UserProfile
 }

@@ -18,6 +18,7 @@ import {TicketDetailsComponent} from './components/ticket-details/ticket-details
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {DepartmentsComponent} from './components/departments/departments.component';
 import {DepartmentComponent} from './components/department/department.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {DepartmentComponent} from './components/department/department.component'
     TicketDetailsComponent,
     DashboardComponent,
     DepartmentsComponent,
-    DepartmentComponent
+    DepartmentComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

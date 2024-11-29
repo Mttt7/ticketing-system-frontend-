@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {catchError, map, Observable, of, Subject} from 'rxjs';
 import {LoginResponsePayload} from '../../models/LoginResponsePayload';
 import {LoginRequestPayload} from '../../models/LoginRequestPayload';
 import {HttpClient} from '@angular/common/http';
@@ -12,6 +12,8 @@ import {UserProfile} from "../../models/UserProfile";
 })
 export class AuthService {
   private authUrl = 'http://localhost:8080/api/v1/auth';
+  $userLoggedIn = new Subject<null>();
+  $userLogOut = new Subject<null>();
 
   constructor(private http: HttpClient, private router: Router) {
   }
@@ -37,8 +39,8 @@ export class AuthService {
     );
   }
 
-  setToken(token: LoginResponsePayload) {
-    localStorage.setItem('jwtToken', token.accessToken);
+  setToken(token: string) {
+    localStorage.setItem('jwtToken', token);
   }
 
   getToken(): string | null {
@@ -47,12 +49,20 @@ export class AuthService {
 
   logout() {
     localStorage.removeItem('jwtToken');
+    localStorage.removeItem('user');
     localStorage.removeItem('userId');
-    this.router.navigateByUrl('/login');
+    this.$userLogOut.next(null);
   }
 
-  userIsLoggedIn(): boolean {
-    return localStorage.getItem('jwtToken') !== null;
+  userIsLoggedIn(): Observable<boolean> {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) {
+      return of(false);
+    }
+    return this.validateJwtToken().pipe(
+      map((response) => response.valid),
+      catchError(() => of(false))
+    );
   }
 
   setSelfId(id: number) {
@@ -65,6 +75,11 @@ export class AuthService {
 
   getLoggedInUser() {
     return JSON.parse(localStorage.getItem('user')!);
+  }
+
+  validateJwtToken(): Observable<{ valid: boolean }> {
+    const token = localStorage.getItem('jwtToken');
+    return this.http.post<{ valid: boolean }>(`${this.authUrl}/validate-jwt`, {jwt: token});
   }
 }
 

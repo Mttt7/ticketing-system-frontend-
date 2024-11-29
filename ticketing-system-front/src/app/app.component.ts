@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {AuthService} from './services/api/auth.service';
 import {NotificationHelperService} from "./services/helpers/notification.helper.service";
 import {WebsocketService} from "./services/helpers/websocket.service";
 import {toast} from "ngx-sonner";
 import {ConverterService} from "./services/helpers/converter.service";
 import {UserProfile} from "./models/UserProfile";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -16,14 +17,45 @@ export class AppComponent {
   id: string = '';
   user: UserProfile = {} as UserProfile;
   unreadNotifications: string = '0';
+  userLoggedIn: boolean = false;
 
   constructor(private authService: AuthService,
               private notificationHelperService: NotificationHelperService, private webSocketService: WebsocketService,
-              private converterService: ConverterService) {
+              private converterService: ConverterService, private router: Router, private cdRef: ChangeDetectorRef) {
   }
 
   ngOnInit(): void {
-    if (this.userIsLoggedIn()) {
+    this.authService.$userLoggedIn.subscribe({
+      next: () => {
+        this.userLoggedIn = true;
+        this.getId();
+        this.cdRef.detectChanges();
+      }
+    })
+    this.authService.$userLogOut.subscribe({
+      next: () => {
+        this.userLoggedIn = false;
+        this.user = {} as UserProfile;
+        this.id = '';
+        this.cdRef.detectChanges();
+      }
+    })
+
+    this.authService.validateJwtToken().subscribe({
+      next: (data) => {
+        this.userLoggedIn = true
+        this.getId();
+      },
+      error: (error) => {
+        this.router.navigateByUrl('/login');
+        return;
+      }
+    })
+
+  }
+
+  getId() {
+    if (this.userLoggedIn) {
       this.id = this.authService.getLoggedInUserId()!;
       this.user = this.authService.getLoggedInUser();
       this.notificationHelperService.$unreadNotifications.subscribe({
@@ -43,10 +75,6 @@ export class AppComponent {
     } else {
       this.id = '';
     }
-  }
-
-  userIsLoggedIn(): boolean {
-    return this.authService.userIsLoggedIn();
   }
 
   ngOnDestroy(): void {

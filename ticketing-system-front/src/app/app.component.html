@@ -12,23 +12,24 @@
       <div class="indicator">
         <span
           class="indicator-item badge badge-sm badge-ghost bg-transparent border-none -right-1 top-1 font-semibold">{{ unreadNotifications }}</span>
-        <a routerLink="/dashboard" class="ml-4 text-green-400 font-semibold">Dashboard</a>
+        <a routerLink="/dashboard" class="ml-4 text-green-400  text">Dashboard</a>
       </div>
 
-      <a routerLink="/departments" class="ml-4 text-green-400 font-semibold">Departments</a>
-      <a routerLink="/customers" class="ml-4 text-red-400 font-semibold">Customers</a>
-      <a routerLink="/tickets" class="ml-4 text-blue-500 font-semibold">Tickets</a>
+      <a routerLink="/departments" class="ml-4 text-blue-500">Departments</a>
+      <a routerLink="/customers" class="ml-4 text-blue-500">Customers</a>
+      <a routerLink="/tickets" class="ml-4 text-blue-500 ">Tickets</a>
 
-      <a routerLink="/tickets" *ngIf="userIsLoggedIn()" class="ml-4 text-blue-500 font-semibold">Admin Panel</a>
+      <a routerLink="/tickets" *ngIf="userLoggedIn" class="ml-4  text-gray-400 text">Admin Panel</a>
 
     </div>
 
-    <div class="ml-auto mr-6" *ngIf="!userIsLoggedIn()">
+    <div class="ml-auto mr-6" *ngIf="!userLoggedIn">
       <a routerLink="/login" class="ml-4 text-blue-500">Login</a>
       <a routerLink="/register" class="ml-4 text-blue-500">Register</a>
     </div>
-    <div class="ml-auto" *ngIf="userIsLoggedIn()">
-      <a routerLink="/profile" class=" text-blue-500  font-semibold">{{ user.firstName }} {{ user.lastName }}</a>
+    <div class="ml-auto" *ngIf="userLoggedIn">
+      <a routerLink="/logout" class="ml-4 text-red-500 text-xs">🔴logout</a>
+      <a routerLink="/profile" class=" text-blue-500 ">{{ user.firstName }} {{ user.lastName }}</a>
     </div>
 
   </div>

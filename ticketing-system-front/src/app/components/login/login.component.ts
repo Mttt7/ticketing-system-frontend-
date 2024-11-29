@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 import {AuthService} from '../../services/api/auth.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {LoginRequestPayload} from '../../models/LoginRequestPayload';
 
 @Component({
@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
   }
 
@@ -47,10 +48,12 @@ export class LoginComponent implements OnInit {
   login() {
     this.authService.login(this.credentials).subscribe(
       (data) => {
-        this.authService.setToken(data);
+        this.authService.setToken(data.accessToken);
         this.authService.setSelfId(data.user.id);
         this.authService.setUser(data.user);
         this.loading = false;
+        this.authService.$userLoggedIn.next(null);
+        this.router.navigate(['/dashboard']);
       },
       (error) => {
         this.loading = false;
