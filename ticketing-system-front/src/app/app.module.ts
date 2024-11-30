@@ -18,7 +18,9 @@ import {TicketDetailsComponent} from './components/ticket-details/ticket-details
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {DepartmentsComponent} from './components/departments/departments.component';
 import {DepartmentComponent} from './components/department/department.component';
-import { LogoutComponent } from './components/logout/logout.component';
+import {LogoutComponent} from './components/logout/logout.component';
+import {TicketsTableComponent} from "./components/tickets-table/tickets-table.component";
+import {MyDepartmentsComponent} from './components/my-departments/my-departments.component';
 
 
 @NgModule({
@@ -35,7 +37,9 @@ import { LogoutComponent } from './components/logout/logout.component';
     DashboardComponent,
     DepartmentsComponent,
     DepartmentComponent,
-    LogoutComponent
+    LogoutComponent,
+    TicketsTableComponent,
+    MyDepartmentsComponent
   ],
   imports: [
     BrowserModule,

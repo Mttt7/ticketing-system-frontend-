@@ -137,48 +137,7 @@ pb-2 w-[95%]">
     </form>
 
     <div class="overflow-x-auto w-[99%] px-2">
-      <table class="table table-xs px-2">
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Customer</th>
-          <th>Content</th>
-          <th>Channel</th>
-          <th>Category</th>
-          <th>Subcategory</th>
-          <th>Priority</th>
-          <th>Is Open</th>
-          <th>Is Followed</th>
-          <th>Opened By</th>
-          <th>Closed By</th>
-          <th>Created At</th>
-          <th>Closed At</th>
-          <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let ticket of tickets">
-          <td>{{ ticket.id }}</td>
-          <td>{{ ticket.customer.firstName }} {{ ticket.customer.lastName }}</td>
-          <td *ngIf="ticket.content.length<30">{{ ticket.content }}</td>
-          <td *ngIf="ticket.content.length>=30">{{ ticket.content.slice(0, 30) }}...</td>
-          <td>{{ ticket.channel }}</td>
-          <td>{{ ticket.category?.name }}</td>
-          <td>{{ ticket.subcategory?.name }}</td>
-          <td>{{ ticket.priority }}</td>
-          <td>{{ ticket.isOpen ? '✅' : '❌' }}</td>
-          <td>{{ ticket.isFollowed ? '✅' : '❌' }}</td>
-          <td>{{ ticket.openedBy?.firstName }} {{ ticket.openedBy?.lastName }}</td>
-          <td>{{ ticket.closedBy?.firstName }} {{ ticket.closedBy?.lastName }}</td>
-          <td>{{ ticket.createdAt | date:'short' }}</td>
-          <td>{{ ticket.closedAt | date:'short' }}</td>
-          <td class="flex items-center justify-center gap-3">
-            <button class="btn btn-sm" [routerLink]="['/tickets', ticket.id]">🔍</button>
-            <button class="btn btn-sm" (click)="openTicketDetails(ticket)">🧭</button>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+      <app-tickets-table (openTicketDetails)="openTicketDetails($event)" [tickets]="tickets"></app-tickets-table>
     </div>
 
     <div class="join mt-10" *ngIf="tickets.length>0">

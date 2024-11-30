@@ -18,7 +18,6 @@ export const authGuard: CanActivateFn = (route, state) => {
       }
     }),
     catchError((error) => {
-      console.log(error);
       toast.info('Your session has expired. Please log in again.');
       router.navigate(['/login']);
       return of(false);

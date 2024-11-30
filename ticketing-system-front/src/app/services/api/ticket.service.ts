@@ -6,6 +6,7 @@ import {Observable} from "rxjs";
 import {Ticket} from "../../models/Ticket";
 import {UserProfile} from "../../models/UserProfile";
 import {StatsDto} from "../../models/StatsDto";
+import {SearchTicketSimpleCriteria} from "../../models/SearchTicketSimpleCriteria";
 
 @Injectable({
   providedIn: 'root'
@@ -65,5 +66,9 @@ export class TicketService {
 
   changeCategory(ticketId: number, categoryId: any, subcategoryId: any): Observable<TicketsResponseDto> {
     return this.http.patch<TicketsResponseDto>(this.ticketUrl + "/" + ticketId + "/" + categoryId + "/" + subcategoryId, {});
+  }
+
+  getTicketFromMyDepartments(searchCriteria: SearchTicketSimpleCriteria, pageNumber: number, pageSize: number, sortType: string): Observable<TicketsResponseDto> {
+    return this.http.post<TicketsResponseDto>(this.ticketUrl + '/my-departments' + `?pageNumber=${pageNumber}&pageSize=${pageSize}&sortType=${sortType}`, searchCriteria);
   }
 }

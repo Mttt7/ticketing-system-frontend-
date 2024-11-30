@@ -1,0 +1,89 @@
+<div class="flex flex-col gap-5  items-center justify-center w-[95vw] mt-20">
+
+  <div class="overflow-x-auto h-full mt-6 w-[60%] bg-white p-4 rounded-md shadow-md">
+    <div class="font-semibold">
+      My departments
+    </div>
+    <table class="table table-xs">
+      <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Categories</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let department of departments" [routerLink]="['/departments', department.id]" class="cursor-pointer">
+        <td>{{ department.id }}</td>
+        <td>{{ department.name }}</td>
+        <td *ngIf="department.subcategories.length>0">
+
+          <div class="" *ngFor="let subcategory of department.subcategories">{{ subcategory.category.name }}
+            - {{ subcategory.name }}
+          </div>
+
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <form [formGroup]="searchTicketForm" (ngSubmit)="searchTickets()"
+        class="flex flex-col gap-4 w-[60%] items-center justify-center p-4 bg-white rounded-md shadow-md">
+    <div class="flex w-full items-center justify-center gap-2">
+      <div class="flex flex-col w-full">
+        <label for="priority">Priority</label>
+        <select id="priority" formControlName="priority" class="input input-bordered w-full mt-1">
+          <option *ngFor="let priority of priorities" [value]="priority">{{ priority }}</option>
+        </select>
+      </div>
+      <div class="flex flex-col w-full">
+        <label for="isOpen" class="block text-sm font-medium text-gray-700">Open</label>
+        <select id="isOpen" formControlName="isOpen" class="input input-bordered w-full mt-1">
+          <option value="" selected></option>
+          <option [value]="true">
+            Yes
+          </option>
+          <option [value]="false">
+            No
+          </option>
+        </select>
+      </div>
+      <div class="flex flex-col w-full">
+        <label for="isFollowed" class="block text-sm font-medium text-gray-700">Followed</label>
+        <select id="isFollowed" formControlName="isFollowed" class="input input-bordered w-full mt-1">
+          <option value="" selected></option>
+          <option [value]="true">
+            Yes
+          </option>
+          <option [value]="false">
+            No
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="flex items-center justify-center gap-2 w-full">
+      <button type="submit" class="btn btn-primary text-white ">Search</button>
+      <select class="input input-bordered input-md" (change)="onSortChange($event)">
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+      </select>
+      <button type="button" class="btn btn-warning mr-auto" (click)="clearForm()">Clear</button>
+
+    </div>
+  </form>
+
+
+  <div class="p-4 bg-white rounded-md shadow-md w-full mb-10">
+    <div class="overflow-x-auto w-[99%] px-2">
+      <app-tickets-table (openTicketDetails)="openTicketDetails($event)" [tickets]="tickets"></app-tickets-table>
+    </div>
+
+    <div class="join mt-10" *ngIf="tickets.length>0">
+      <button class="join-item btn" (click)="previousPage()" *ngIf="pageNumber > 0">«</button>
+      <button class="join-item btn">Page {{ pageNumber + 1 }}/{{ allPages }}</button>
+      <button class="join-item btn" (click)="nextPage()" *ngIf="!last">»</button>
+    </div>
+  </div>
+</div>
+

@@ -10,6 +10,7 @@ import {DepartmentsComponent} from "./components/departments/departments.compone
 import {DepartmentComponent} from "./components/department/department.component";
 import {authGuard} from "./guards/auth.guard";
 import {LogoutComponent} from "./components/logout/logout.component";
+import {MyDepartmentsComponent} from "./components/my-departments/my-departments.component";
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -19,6 +20,11 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'my-departments',
+    component: MyDepartmentsComponent,
     canActivate: [authGuard],
   },
   {

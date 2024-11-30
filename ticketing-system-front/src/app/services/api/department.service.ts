@@ -18,6 +18,10 @@ export class DepartmentService {
     return this.http.get<DepartmentsResponseDto>(this.departmentUrl + `/?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
 
+  getUserDepartments(): Observable<Department[]> {
+    return this.http.get<Department[]>(this.departmentUrl + `/my-departments`);
+  }
+
   getUsersByDepartmentId(departmentId: number, pageNumber: number, pageSize: number): Observable<UsersResponseDto> {
     return this.http.get<UsersResponseDto>(this.departmentUrl + `/${departmentId}/users` + `?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
