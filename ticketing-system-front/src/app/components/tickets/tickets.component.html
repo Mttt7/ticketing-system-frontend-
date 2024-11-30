@@ -124,8 +124,16 @@ pb-2 w-[95%]">
 
       </div>
 
-      <button type="submit" class="btn btn-primary text-white mt-4">Search</button>
-      <button type="button" class="btn btn-warning mt-4 ml-2" (click)="clearForm()">Clear</button>
+      <div class="flex items-center justify-center gap-2 w-full">
+        <button type="submit" class="btn btn-primary text-white ">Search</button>
+        <select class="input input-bordered input-md" (change)="onSortChange($event)">
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+        </select>
+        <button type="button" class="btn btn-warning mr-auto" (click)="clearForm()">Clear</button>
+
+      </div>
+
     </form>
 
     <div class="overflow-x-auto w-[99%] px-2">

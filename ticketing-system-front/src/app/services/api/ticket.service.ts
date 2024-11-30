@@ -16,11 +16,11 @@ export class TicketService {
   constructor(private http: HttpClient) {
   }
 
-  searchTickets(searchCriteria: SearchTicketCriteria, pageNumber: number) {
+  searchTickets(searchCriteria: SearchTicketCriteria, pageNumber: number, sortType: string) {
     searchCriteria.createdAfter = searchCriteria.createdAfter.trim()
     searchCriteria.createdBefore = searchCriteria.createdBefore.trim()
 
-    return this.http.post<TicketsResponseDto>(this.ticketUrl + `/search?pageNumber=${pageNumber}`, searchCriteria);
+    return this.http.post<TicketsResponseDto>(this.ticketUrl + `/search?pageNumber=${pageNumber}&sortType=${sortType}`, searchCriteria);
   }
 
   createTicket(ticketData: any) {

@@ -30,6 +30,7 @@ export class TicketsComponent {
   allPages: number = 0;
   last: boolean = false;
   users: any[] = [];
+  sortType: string = 'newest';
 
   selectedCustomer?: Customer;
   @ViewChild("modal_2") modal2!: ElementRef;
@@ -78,6 +79,11 @@ export class TicketsComponent {
     this.loadCategories();
   }
 
+  onSortChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.sortType = selectElement.value;
+  }
+
   loadChannels(): void {
     this.enumService.getChannels().subscribe((channels) => {
       this.channels = channels;
@@ -93,7 +99,7 @@ export class TicketsComponent {
   searchTickets() {
     if (this.searchTicketForm.valid) {
       const searchCriteria = this.searchTicketForm.value;
-      this.ticketService.searchTickets(searchCriteria, this.pageNumber).subscribe(response => {
+      this.ticketService.searchTickets(searchCriteria, this.pageNumber, this.sortType).subscribe(response => {
         this.pageNumber = response.number;
         this.last = response.last;
         this.allPages = response.totalPages;
