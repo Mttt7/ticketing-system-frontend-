@@ -7,6 +7,10 @@ import {CommentService} from "../../services/api/comment.service";
 import {Comment} from "../../models/Comment";
 import {UserProfile} from "../../models/UserProfile";
 import {UserService} from "../../services/api/user.service";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Category} from "../../models/Category";
+import {Subcategory} from "../../models/Subcategory";
+import {CategoryService} from "../../services/api/category.service";
 
 @Component({
   selector: 'app-ticket-details',
@@ -14,7 +18,7 @@ import {UserService} from "../../services/api/user.service";
   styleUrl: './ticket-details.component.css'
 })
 export class TicketDetailsComponent {
-
+  newCategoryForm: FormGroup;
   ticketId: number = -1;
   ticket!: Ticket;
   newCommentContent: string = '';
@@ -26,20 +30,30 @@ export class TicketDetailsComponent {
   users: UserProfile[] = [];
   followers: UserProfile[] = [];
   displayedUsers: UserProfile[] = [];
+  categories: Category[] = [];
+  subcategories: Subcategory[] = [];
+
 
   @ViewChild('new_comment_modal') newCommentModal!: ElementRef;
   @ViewChild('assign_to_modal') assign_to_modal!: ElementRef;
 
   constructor(private route: ActivatedRoute, private ticketService: TicketService,
-              private commentService: CommentService, private userService: UserService) {
+              private commentService: CommentService, private userService: UserService,
+              private fb: FormBuilder, private categoryService: CategoryService) {
+
+    this.newCategoryForm = this.fb.group({
+      categoryId: ['', Validators.required],
+      subcategoryId: ['', Validators.required],
+    });
   }
 
   ngOnInit() {
     this.ticketId = Number(this.route.snapshot.paramMap.get('id'));
     this.getTicket();
+    this.loadCategories();
   }
 
-  getTicket(){
+  getTicket() {
     this.ticketService.getTicketById(this.ticketId).subscribe(ticket => {
       this.ticket = ticket;
       this.getAllComments();
@@ -184,5 +198,37 @@ export class TicketDetailsComponent {
       console.error(e);
       toast.error('An error occurred while closing the ticket');
     }
+  }
+
+  changeCategory() {
+    if (this.newCategoryForm.valid) {
+      const categoryId = this.newCategoryForm.get('categoryId')?.value;
+      const subcategoryId = this.newCategoryForm.get('subcategoryId')?.value;
+      this.ticketService.changeCategory(this.ticketId, categoryId, subcategoryId).subscribe({
+        next: () => {
+          toast.success('Category changed successfully');
+          this.newCategoryForm.reset();
+          this.comments = [];
+          this.getTicket();
+        },
+        error: (error: any) => {
+          toast.error('Error changing category: ' + error.error.error);
+        }
+      });
+    }
+  }
+
+  categoryChanged() {
+    const selectedCategoryId = this.newCategoryForm.get('categoryId')?.value;
+    const selectedCategory = this.categories.find(category => category.id === +selectedCategoryId);
+    this.subcategories = selectedCategory?.subcategories || [];
+    this.newCategoryForm.get('subcategoryId')?.setValue('');
+  }
+
+  loadCategories() {
+    this.categoryService.getCategories().subscribe(categories => {
+      this.categories = categories;
+      this.subcategories = [];
+    });
   }
 }

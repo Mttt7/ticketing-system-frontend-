@@ -62,4 +62,8 @@ export class TicketService {
   closeTicket(ticketId: number): Observable<TicketsResponseDto> {
     return this.http.post<TicketsResponseDto>(this.ticketUrl + "/" + ticketId + '/close', null);
   }
+
+  changeCategory(ticketId: number, categoryId: any, subcategoryId: any): Observable<TicketsResponseDto> {
+    return this.http.patch<TicketsResponseDto>(this.ticketUrl + "/" + ticketId + "/" + categoryId + "/" + subcategoryId, {});
+  }
 }

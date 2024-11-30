@@ -18,7 +18,7 @@
         <div class="font-semibold">Closed by:</div>
         <div>{{ ticket.closedBy?.firstName }} {{ ticket.closedBy?.lastName }}</div>
         <div>{{ ticket.closedBy?.email }}</div>
-        <div>{{ ticket?.closedAt | date: 'medium'}}</div>
+        <div>{{ ticket?.closedAt | date: 'medium' }}</div>
       </div>
       <div class="flex flex-col items-start justify-center border-[2px] border-r-0 p-4 pt-2 ">
         <div class="font-semibold">Ticket #{{ ticket.id }}</div>
@@ -52,9 +52,10 @@
         </button>
       </div>
       <button class="btn btn-primary text-white">Email client</button>
-      <button class="btn btn-warning text-white">Change Category</button>
-      <button class="btn btn-error btn-disabled text-white" *ngIf="ticket.closedBy" >Close</button>
-      <button class="btn btn-error text-white" *ngIf="!ticket.closedBy" onclick="close_ticket_modal.showModal()">Close</button>
+      <button class="btn btn-warning text-white" onclick="change_category_modal.showModal()">Change Category</button>
+      <button class="btn btn-error btn-disabled text-white" *ngIf="ticket.closedBy">Close</button>
+      <button class="btn btn-error text-white" *ngIf="!ticket.closedBy" onclick="close_ticket_modal.showModal()">Close
+      </button>
 
       <div class="overflow-x-auto">
         <div class="text-center font-semibold italic mb-2">Followers:</div>
@@ -123,13 +124,51 @@
   </div>
 </dialog>
 
+<dialog id="change_category_modal" class="modal" #change_category_modal>
+  <div class="modal-box max-w-screen-xs bg-white w-full">
+    <div class="py-4 w-full">
+      <div class="font-semibold">
+        Change Category
+      </div>
+      <form [formGroup]="newCategoryForm" class="flex w-full gap-4 p-4">
+
+        <div class="flex flex-col w-full">
+          <label for="categoryId" class="block text-sm font-medium text-gray-700">Category</label>
+          <select id="categoryId" formControlName="categoryId" class="input input-bordered w-full mt-1"
+                  (change)="categoryChanged()">
+            <option value="" selected></option>
+            <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+          </select>
+        </div>
+        <div class="flex flex-col w-full">
+          <label for="subcategoryId" class="block text-sm font-medium text-gray-700">Subcategory</label>
+          <select id="subcategoryId" formControlName="subcategoryId" class="input input-bordered w-full mt-1">
+            <option value="" selected></option>
+            <option *ngFor="let subcategory of subcategories" [value]="subcategory.id">{{ subcategory.name }}</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn btn-warning text-white mx-1" (click)="changeCategory()">Change</button>
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+</dialog>
+
 <dialog id="close_ticket_modal" class="modal" #close_ticket_modal>
-  <div class="modal-box max-w-screen-md bg-white">
+
+  <div class="modal-box max-w-screen-xs bg-white">
+    <div class="font-semibold">
+      Change Category
+    </div>
     Are your sure? Action cannot be undone.
     <div class="modal-action">
 
       <form method="dialog">
-        <button class="btn btn-error text-white" (click)="closeTicket()">Yes - Close Ticket</button>
+        <button class="btn btn-error text-white mx-2" (click)="closeTicket()">Yes - Close Ticket</button>
         <button class="btn">No</button>
       </form>
     </div>
@@ -137,14 +176,14 @@
 </dialog>
 
 <dialog id="assign_to_modal" class="modal" #assign_to_modal>
-  <div class="modal-box max-w-screen-md bg-white">
+  <div class="modal-box max-w-screen-xs bg-white">
     <div class="py-4 w-full">
       <select class="select select-bordered select-lg w-full" [(ngModel)]="newFollowerId">
         <option *ngFor="let user of displayedUsers" [value]="user.id">{{ user.firstName }} {{ user.lastName }}</option>
       </select>
     </div>
     <div class="modal-action">
-      <button class="btn btn-primary text-white" (click)="followForOtherUser()">Add</button>
+      <button class="btn btn-primary text-white" (click)="followForOtherUser()">Assign</button>
       <form method="dialog">
         <button class="btn">Close</button>
       </form>

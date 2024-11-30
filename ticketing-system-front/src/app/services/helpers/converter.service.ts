@@ -22,6 +22,8 @@ export class ConverterService {
         return 'New user on your department #' + contentId;
       case 'FOLLOWED_TICKET_CLOSED':
         return 'Followed ticket closed #' + contentId;
+      case 'FOLLOWED_TICKET_CATEGORY_CHANGED':
+        return 'Followed ticket category changed #' + contentId;
       case 'ACTION_NEEDED_TIME':
         return 'Action needed #' + contentId;
       default:
