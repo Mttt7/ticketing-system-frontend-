@@ -26,4 +26,8 @@ export class CustomersService {
     // TODO pagination
     return this.http.get(this.customerUrl + `/${id}/tickets?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
+
+  addCustomer(newCustomer: Customer) {
+    return this.http.post(this.customerUrl+"/", newCustomer);
+  }
 }

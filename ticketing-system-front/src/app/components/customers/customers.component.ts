@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {CustomersService} from "../../services/api/customers.service";
 import {SearchCustomerCriteria} from "../../models/SearchCustomerCriteria";
@@ -13,15 +13,16 @@ import {Ticket} from "../../models/Ticket";
   styleUrl: './customers.component.css'
 })
 export class CustomersComponent {
-
   searchForm!: FormGroup;
   editCustomerForm!: FormGroup;
+  addCustomerForm!: FormGroup;
   customers: Customer[] = [];
   pageNumber: number = 0;
   allPages: number = 0;
   last: boolean = false;
   currentCustomer!: Customer;
   tickets: Ticket[] = [];
+  @ViewChild('add_customer_modal') addCustomerModal: any;
 
   constructor(private fb: FormBuilder, private customersService: CustomersService) {
     this.searchForm = this.fb.group({
@@ -31,6 +32,21 @@ export class CustomersComponent {
       lastName: ['']
     });
     this.editCustomerForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.email]],
+      phone: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.maxLength(13),
+          Validators.pattern(/^\d+$/)
+        ]
+      ]
+    });
+
+    this.addCustomerForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.email]],
@@ -82,6 +98,31 @@ export class CustomersComponent {
           next: (res) => {
             toast.success('Customer updated successfully!');
             this.onSearch();
+          },
+          error: (error: HttpErrorResponse) => {
+            if (error.status === 400) {
+              toast.error(error.error.error + " " + error.error.message);
+            } else {
+              toast.error(error.error.error + "" + error.error.message);
+            }
+            console.error('Error response:', error);
+          }
+        });
+    } else {
+      toast.error('Please fill all required fields correctly!');
+    }
+  }
+
+  addCustomer() {
+    if (this.addCustomerForm.valid) {
+      const newCustomer: Customer = this.addCustomerForm.value;
+
+      this.customersService.addCustomer(newCustomer)
+        .subscribe({
+          next: (res) => {
+            toast.success('Customer added successfully!');
+            this.onSearch();
+            this.addCustomerModal.nativeElement.close();
           },
           error: (error: HttpErrorResponse) => {
             if (error.status === 400) {
